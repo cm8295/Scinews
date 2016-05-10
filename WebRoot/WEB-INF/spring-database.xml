@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <!-- <property name="jdbcUrl" value="jdbc:mysql://159.226.140.48:3306/xzzscq?useUnicode=true&amp;characterEncoding=utf-8&amp;autoreconnect=true" /> -->
+        <property name="jdbcUrl" value="jdbc:mysql:///xzzscq?useUnicode=true&amp;characterEncoding=utf-8&amp;autoreconnect=true" />
+        <property name="user" value="root" />
+        <!-- <property name="password" value="mysqlat48" /> --> 
+        <property name="password" value="123456" />
+
+        <!-- these are C3P0 properties -->
+        <property name="acquireIncrement" value="2" />
+        <property name="minPoolSize" value="1" />
+        <property name="maxPoolSize" value="50" />
+        <property name="maxIdleTime" value="180" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>gov.lct.model.Tpatentbasicinfo</value>
+				<value>gov.lct.model.Tpolice</value>
+				<value>gov.lct.model.Tkjcg</value>
+				<value>gov.lct.model.Texperts</value>
+				<value>gov.lct.model.Tuser</value>
+				<value>gov.lct.model.Tip</value>
+				<value>gov.lct.model.Ttibet</value>
+				<value>gov.lct.model.Tsplit</value>
+				<value>gov.lct.model.Tsoftware</value>	
+                <value>gov.lct.model.Tmap</value>
+                <value>gov.lct.model.Ttechenterprise</value>
+                <value>gov.lct.model.Tmasenterprise</value>		
+                <value>gov.lct.model.Trole</value>    
+                <value>gov.lct.model.Trequire</value>   
+                <value>gov.lct.model.Tupload</value>           						
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">false</prop>				
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="hibernateTransactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	
+</beans>

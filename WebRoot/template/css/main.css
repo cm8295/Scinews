@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* CSS Document */
+
+body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
+	font-family: "Microsoft YaHei", '宋体', Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+	color: #666666;
+	line-height: 150%;
+}
+        .lanmu {
+	font-size: 14px;
+	line-height: 150%;
+	color: #666;
+	text-decoration: none;
+	height: 28px;
+}
+        .lv {
+	font-size: 20px;
+	color: #093;
+	text-decoration: none;
+	font-weight: normal;
+	display: block;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: 15px;
+}
+
+        .lv2 {
+	font-size: 14px;
+	color: #093;
+	text-decoration: none;
+	font-weight: normal;
+	
+}
+
+.dw {
+	font-size: 20px;
+	color: #FFFFFF;
+	font-weight: bold;
+	margin-bottom: 20px;
+	display: block;
+	margin-top: 20px;
+}
+.wz3 {
+	font-size: 14px;
+	line-height: 100%;
+	color: #585858;
+	text-decoration: none;
+}

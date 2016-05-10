@@ -1,0 +1,21 @@
+package gov.lct.util;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+final public class MySessionFactory {
+	private static SessionFactory sessionFactory=null;
+	
+	public static SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	private MySessionFactory()
+	{	
+	}
+	
+	static
+	{
+		sessionFactory=new Configuration().configure().buildSessionFactory();
+	}
+}

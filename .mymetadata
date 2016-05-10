@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="LCTNEW"
+  id="myeclipse.1382057893453"
+  context-root="/LCTNEW"
+  j2ee-spec="5.0"
+  archive="LCTNEW.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

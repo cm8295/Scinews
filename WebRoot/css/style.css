@@ -1,0 +1,51 @@
+BODY {
+	SCROLLBAR-FACE-COLOR: #eeeeee; FONT-SIZE: 12px; BACKGROUND: #FFFFFF; MARGIN: 0px; SCROLLBAR-HIGHLIGHT-COLOR: #ffffff; SCROLLBAR-SHADOW-COLOR: #b4b4b4; COLOR: #000000; SCROLLBAR-3DLIGHT-COLOR: #b4b4b4; SCROLLBAR-ARROW-COLOR: #333333; FONT-FAMILY: Arial, Helvetica, sans-serif; SCROLLBAR-DARKSHADOW-COLOR: #ffffff; SCROLLBAR-BASE-COLOR: #eeeeee
+}
+TR {
+	SCROLLBAR-FACE-COLOR: #eeeeee; FONT-SIZE: 12px; MARGIN: 0px; SCROLLBAR-HIGHLIGHT-COLOR: #ffffff; SCROLLBAR-SHADOW-COLOR: #b4b4b4; COLOR: #000000; SCROLLBAR-3DLIGHT-COLOR: #b4b4b4; SCROLLBAR-ARROW-COLOR: #333333; SCROLLBAR-DARKSHADOW-COLOR: #ffffff; SCROLLBAR-BASE-COLOR: #eeeeee
+}
+TD {
+	SCROLLBAR-HIGHLIGHT-COLOR: #ffffff; SCROLLBAR-SHADOW-COLOR: #b4b4b4; SCROLLBAR-3DLIGHT-COLOR: #b4b4b4; SCROLLBAR-ARROW-COLOR: #333333; SCROLLBAR-DARKSHADOW-COLOR: #ffffff; SCROLLBAR-BASE-COLOR: #eeeeee
+}
+SELECT {
+	BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px 	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+A:link {
+	COLOR: #205cb2; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #205cb2; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #0066cc; TEXT-DECORATION: underline
+}
+.a {
+	height: 18px;
+	width: 45px;
+	background-color: #CCCCCC;
+	border: 1px dotted #000000;
+	margin: 1px;
+	padding: 0px;
+}
+.text {
+	height: 18px;
+}
+.text1 {
+	height: 12px;
+}
+
+td {
+	font-size: 12px;
+}
+.liststyle{
+	text-indent:25px;
+	background-color:#dfffff;
+}
+.liststyle2{
+	text-indent:25px;
+	background-color:#efefef;
+}
+

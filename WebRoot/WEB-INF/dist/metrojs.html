@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0048)http://www.drewgreenwell.com/tests/LiveTiles.htm -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Live Tiles</title>
+    
+    <link href="./MetroJs/MetroJs.lt.css" rel="stylesheet" type="text/css">
+    
+    
+    
+    
+</head>
+<body>
+<div class="tiles">
+    <div class="live-tile slide ha">
+        <div style="transition-property: transform; -webkit-transition-property: transform; transition-duration: 500ms; -webkit-transition-duration: 500ms; transition-timing-function: ease; -webkit-transition-timing-function: ease; transform: translate(0%, 100%) translateZ(0px); background-color: red;" class="slide-front ha">test 1</div>
+		<div style="background-color:Orange;" class="slide-back ha">test back</div>
+    </div>
+    <div class="live-tile flip ha" data-mode="flip">
+        <div style="transform: rotateX(180deg); transition: all 500ms ease 0s; -webkit-transition: all 500ms ease 0s; background-color: green;" class="flip-front ha">test 2</div>
+        <div style="transform: rotateX(360deg); transition: all 500ms ease 0s; -webkit-transition: all 500ms ease 0s; background-color: red;" class="flip-back ha">test 2 - back</div>
+    </div>
+    <div class="list-tile">
+        <ul class="flip-list fourTiles" data-mode="flip-list">
+            <li class="tile-1 ha"><div style="margin: 0px; transform: rotateX(180deg); transition: all 500ms ease 0s; -webkit-transition: all 500ms ease 0s; background-color: blue;" class="flip-front ha"></div><div style="margin: 0px; transform: rotateX(360deg); transition: all 500ms ease 0s; -webkit-transition: all 500ms ease 0s; background-color: orange;" class="flip-back ha"></div></li>
+            <li class="tile-2 ha"><div style="margin: 0px; transform: rotateX(180deg); transition: all 500ms ease 0s; -webkit-transition: all 500ms ease 0s; background-color: orange;" class="flip-front ha"></div><div style="margin: 0px; transform: rotateX(360deg); transition: all 500ms ease 0s; -webkit-transition: all 500ms ease 0s; background-color: blue;" class="flip-back ha"></div></li>
+            <li class="tile-3 ha"><div style="margin: 0px; transform: rotateX(180deg); transition: all 500ms ease 0s; -webkit-transition: all 500ms ease 0s; background-color: green;" class="flip-front ha"></div><div style="margin: 0px; transform: rotateX(360deg); transition: all 500ms ease 0s; -webkit-transition: all 500ms ease 0s; background-color: red;" class="flip-back ha"></div></li>
+            <li class="tile-4 ha"><div style="margin: 0px; transform: rotateX(180deg); transition: all 500ms ease 0s; -webkit-transition: all 500ms ease 0s; background-color: red;" class="flip-front ha"></div><div style="margin: 0px; transform: rotateX(360deg); transition: all 500ms ease 0s; -webkit-transition: all 500ms ease 0s; background-color: green;" class="flip-back ha"></div></li>
+        </ul>
+    </div>
+</div>
+    
+    
+    
+    
+    <script src="./MetroJs/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="./MetroJs/MetroJs.lt.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".live-tile,.flip-list").liveTile();
+        });
+    </script>
+
+
+
+
+
+
+
+</body></html>

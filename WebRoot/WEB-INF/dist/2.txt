@@ -1,0 +1,53 @@
+
+orange       red    blue     green               
+
+小方块--------------------------------------------------------------------------------------------------------------
+
+   <a class="tile app bg-color-orange" href="template.html">
+                           <div class="image-wrapper">
+                              <img src="images/RegEdit.png" alt="" />
+                           </div>
+                           <span class="app-label">在线竞价</span>
+                        </a>
+
+
+大方块---------------------------------------------------------------------------------------------------------------
+
+    <a class="tile wide imagetext bg-color-greenDark" href="./base-css.html">
+                           <div class="image-wrapper">
+                            <img src="images/RegEdit.png" alt="" />
+                           </div>
+                           <div class="column-text">
+                              <div class="text">Typography</div>
+                              <div class="text">Tables</div>
+                              <div class="text">Forms</div>
+                              <div class="text">Buttons</div>
+                           </div>
+                           <span class="app-label">实时咨询个性化推送</span>
+                        </a>
+
+带背景的小方块---------------------------------------------------------------------------------------------------------------
+
+<a class="tile square image" href="template.html">
+                              <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hagia_Sophia_Mars_2013.jpg/640px-Hagia_Sophia_Mars_2013.jpg" alt=""/>
+                            <img src="images/RegEdit.png" alt="" />
+                                <div class="textover-wrapper transparent">
+                                 <div class="text2"><span class="app-label">专利数据库</span></div>
+                              </div>
+                           </a>
+
+
+带背景的大方块---------------------------------------------------------------------------------------------------------------
+
+          <a class="tile wide imagetext wideimage bg-color-blue" href="template.html">
+                             <img src="images/RegEdit.png" alt="" />
+                              <div class="textover-wrapper bg-color-blueDark">
+                                 <div class="text2">
+                                   <div class="text2">
+                                     <p>新产品新技术鉴定服务系统 </p>
+                                   </div>
+                                 </div>
+                              </div>
+                           </a>
+
+
