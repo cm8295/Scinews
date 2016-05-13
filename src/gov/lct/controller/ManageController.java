@@ -327,7 +327,7 @@ public class ManageController {
 	
 	@RequestMapping(value="/pageUpload")
 	public String pageUpload(HttpServletRequest request) throws Exception{
-		
+
 		return "unauth/manage/upload";
 	}
 	
