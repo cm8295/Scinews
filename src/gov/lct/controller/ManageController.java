@@ -310,6 +310,25 @@ public class ManageController {
 		return "unauth/manage/information";
 	}
 	
+	@RequestMapping(value="/usermenu")
+	public String userMenu(HttpServletRequest request) throws Exception{
+		return "unauth/manage/user-menu";
+	}
 	
+	@RequestMapping(value="/userleft")
+	public String userLeft(HttpServletRequest request) throws Exception {	
+        return "unauth/manage/user-left";
+	}
+	
+	@RequestMapping(value="/userState")
+	public String userState(HttpServletRequest request) throws Exception {	
+        return "unauth/manage/user-state";
+	}
+	
+	@RequestMapping(value="/pageUpload")
+	public String pageUpload(HttpServletRequest request) throws Exception{
+		
+		return "unauth/manage/upload";
+	}
 	
 }

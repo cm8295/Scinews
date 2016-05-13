@@ -28,7 +28,7 @@ function setmarquee(o){
 <div>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
-		<td colspan=6><img src="images/top_pics/top4zky.jpg" alt=""
+		<td colspan=6><img src="../images/bj6.jpg" alt=""
 			border="0" usemap="#Map" width="100%" height="89"></td>
 	</tr>
 </table>

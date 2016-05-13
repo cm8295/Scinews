@@ -11,7 +11,7 @@
 <TABLE height="100%" cellSpacing=0 cellPadding=0 border=0>
   <TBODY>
   <TR height="100%">
-    <TD height="100%" align=middle background="images/split_bg.jpg" class=spiltBtn><img alt="开关" src="images/split_left.jpg" name="right" id="right" style="cursor:hand" onClick="showHide();"  /></TD>
+    <TD height="100%" align=middle background="images/split_bg.jpg" class=spiltBtn><!-- <img alt="开关" src="images/split_left.jpg" name="right" id="right" style="cursor:hand" onClick="showHide();"  /> --></TD>
   </TR></TBODY></TABLE>
 
 <script language="javascript"> 
