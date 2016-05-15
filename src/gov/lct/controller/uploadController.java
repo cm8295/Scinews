@@ -38,7 +38,7 @@ public class uploadController {
 	
 	
 	
-	@RequestMapping("/upload")
+	@RequestMapping("/user-upload")
 	public String upload(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
 		//HttpSession session = request.getSession();	
 		//String realname = session.getAttribute("realname").toString();
@@ -47,6 +47,8 @@ public class uploadController {
 		//System.out.println(loginname);
 		//String path1 = request.getSession().getServletContext().getRealPath("upload/img/product");
         //System.out.println(file);
+		String checkbox2 = request.getParameter("checkbox2");
+		System.out.println("checkbox2=" + checkbox2);
 		
 		//保存所有文件名
 		ArrayList<String> files = new ArrayList<String>();
@@ -60,7 +62,7 @@ public class uploadController {
             Iterator<String> iter = multiRequest.getFileNames();  
             while(iter.hasNext()){  
                 //记录上传过程起始时的时间，用来计算上传时间  
-                int pre = (int) System.currentTimeMillis();  
+                int pre = (int) System.currentTimeMillis(); 
                 //取得上传文件  
                 MultipartFile file = multiRequest.getFile(iter.next());  
                 if(file != null){  
@@ -111,7 +113,7 @@ public class uploadController {
                 
             }  
         }  
-        return "unauth/manage/upload";
+        return "unauth/manage/user-upload";
 	}
 	
 	@RequestMapping("toupload")

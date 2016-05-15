@@ -15,11 +15,11 @@
 			noresize="noresize" id="leftFrame" title="leftFrame" target="main"/>
 		<frame name="split" scrolling="no" noresize src="split"
 			marginwidth="0" marginheight="0" />
-		<frame name="userState" src="userState" scrolling="yes" />
+		<frame name="userstate" src="userupload" scrolling="yes" />
 	</frameset>
 	<frame src="bottom" name="bottom" scrolling="No"
 		noresize="noresize" id="botFrame" title="botFrame" />
-  </frameset>
+</frameset>
   
 <body>
 

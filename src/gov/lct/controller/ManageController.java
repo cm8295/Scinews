@@ -19,6 +19,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * @date 2016-04-22
@@ -320,15 +323,20 @@ public class ManageController {
         return "unauth/manage/user-left";
 	}
 	
-	@RequestMapping(value="/userState")
+	@RequestMapping(value="/userstate")
 	public String userState(HttpServletRequest request) throws Exception {	
         return "unauth/manage/user-state";
 	}
 	
-	@RequestMapping(value="/pageUpload")
+	@RequestMapping(value="/userupload")
 	public String pageUpload(HttpServletRequest request) throws Exception{
 
-		return "unauth/manage/upload";
+		return "unauth/manage/user-upload";
 	}
 	
+	//测试1
+	@RequestMapping(value="/userupload1")
+	public String test(@RequestParam("param1") String param1,@RequestParam("param2") String param2,HttpServletRequest request){
+		return "unauth/manage/user-upload"; 
+	}
 }
