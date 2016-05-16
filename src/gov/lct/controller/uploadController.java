@@ -34,21 +34,19 @@ public class uploadController {
 	@Autowired
 	private TuploadService tuploadService;
 	
-	
-	
-	
-	
-	@RequestMapping("/user-upload")
+	@RequestMapping("/upload")
 	public String upload(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
-		//HttpSession session = request.getSession();	
-		//String realname = session.getAttribute("realname").toString();
-		//String loginname = session.getAttribute("loginname").toString();		
-		//System.out.println(realname);
-		//System.out.println(loginname);
-		//String path1 = request.getSession().getServletContext().getRealPath("upload/img/product");
-        //System.out.println(file);
-		String checkbox2 = request.getParameter("checkbox2");
-		System.out.println("checkbox2=" + checkbox2);
+		String loginname = null;
+		try {
+			HttpSession session = request.getSession();	
+			//String realname = session.getAttribute("realname").toString();
+			loginname = session.getAttribute("loginname").toString();		
+			//System.out.println(realname);
+			//System.out.println(loginname);
+	        //System.out.println(file);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		
 		//保存所有文件名
 		ArrayList<String> files = new ArrayList<String>();
@@ -59,7 +57,7 @@ public class uploadController {
             //转换成多部分request    
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;  
             //取得request中的所有文件名  
-            Iterator<String> iter = multiRequest.getFileNames();  
+            Iterator<String> iter = multiRequest.getFileNames(); 
             while(iter.hasNext()){  
                 //记录上传过程起始时的时间，用来计算上传时间  
                 int pre = (int) System.currentTimeMillis(); 
@@ -73,20 +71,17 @@ public class uploadController {
                         System.out.println(myFileName);  
                         //重命名上传后的文件名  
                         String fileName = file.getOriginalFilename();  
-                        
-                        System.out.println(request.getParameter("file1"));
+                        System.out.println(file.getName());
                         //定义上传路径  request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
-                        String dir = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/admin");
+                        String dir = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/" + loginname);
                         File fileDir = new File(dir);
                         if (!fileDir.exists() && !fileDir.isDirectory()) {
 							fileDir.mkdirs();
 						}
-                        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/admin") + File.separator + fileName;
+                        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/" + loginname) + File.separator + fileName;
                         System.out.println(path);
                         File localFile = new File(path);  
                         file.transferTo(localFile);  
-                        
-                        
                     }  
                 }  
                 //记录上传该文件后的时间  
@@ -94,7 +89,7 @@ public class uploadController {
                 System.out.println(finaltime - pre);
                 //存储上传文件
                 Tupload tupload = new Tupload();
-                //tupload.setLoginname(loginname);
+                tupload.setLoginname(loginname);
                 tupload.setFile1(request.getParameter("file1"));
                 tupload.setFile2(request.getParameter("file2"));
                 tupload.setFile3(request.getParameter("file3"));
@@ -109,11 +104,11 @@ public class uploadController {
                 tupload.setFile12(request.getParameter("file12"));
                 tupload.setFile13(request.getParameter("file13"));
                 tupload.setFile14(request.getParameter("file14"));
+                tupload.setUploadtime(Integer.toString(finaltime));
                 tuploadService.save(tupload);
-                
             }  
         }  
-        return "unauth/manage/user-upload";
+        return "unauth/manage/upload";
 	}
 	
 	@RequestMapping("toupload")

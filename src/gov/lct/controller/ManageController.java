@@ -334,7 +334,7 @@ public class ManageController {
 		return "unauth/manage/user-upload";
 	}
 	
-	//测试1
+	//测试1,两个参数
 	@RequestMapping(value="/userupload1")
 	public String test(@RequestParam("param1") String param1,@RequestParam("param2") String param2,HttpServletRequest request){
 		return "unauth/manage/user-upload"; 

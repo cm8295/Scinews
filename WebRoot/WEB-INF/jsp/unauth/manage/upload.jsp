@@ -55,7 +55,7 @@
  	 <h1>springMVC包装类上传文件</h1> 
  	<form name="userForm2" action="/Scinews/file/upload" enctype="multipart/form-data" method="post" onsubmit="return check()">
  		<div id="newUpload2">
-			<input type="file" name="file_1" id="file_1">
+			<input type="file" name="file_11" id="file_12">
 		</div>
 		<div id="div1">
 		    <input type="hidden" name="file1" id="file1" value="womeiyou"/>
