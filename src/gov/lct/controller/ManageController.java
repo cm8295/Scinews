@@ -1,18 +1,28 @@
 package gov.lct.controller;
 
 import gov.lct.model.Trole;
+import gov.lct.model.Tupload;
 import gov.lct.service.TroleService;
+import gov.lct.service.TuploadService;
 import gov.lct.model.Trequire;
 import gov.lct.service.TrequireService;
 import gov.lct.model.Tpatentbasicinfo;
 import gov.lct.service.TpatentbasicinfoService;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -20,6 +30,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
@@ -37,6 +50,8 @@ public class ManageController {
 	private TrequireService trequireService;
 	@Autowired
 	private TpatentbasicinfoService patentService;
+	@Autowired
+	private TuploadService tuploadService;
 	
 	
 	@RequestMapping(value="/index")
@@ -332,6 +347,188 @@ public class ManageController {
 	public String pageUpload(HttpServletRequest request) throws Exception{
 
 		return "unauth/manage/user-upload";
+	}
+	
+	
+	
+	@RequestMapping("/upload")
+	public String upload(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
+		String loginname = null;
+		try {
+			HttpSession session = request.getSession();	
+			//String realname = session.getAttribute("realname").toString();
+			loginname = session.getAttribute("loginname").toString();	
+			//System.out.println(realname);
+			System.out.println(loginname);
+			if (loginname.equals(null)) {
+				return "/error";
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			return "/error";
+		}
+		
+		//保存所有文件名
+		ArrayList<String> files = new ArrayList<String>();
+		//创建一个通用的多部分解析器  
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());  
+        //判断 request 是否有文件上传,即多部分请求  
+        if(multipartResolver.isMultipart(request)){  
+            //转换成多部分request    
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;  
+            //取得request中的所有文件名  
+            Iterator<String> iter = multiRequest.getFileNames(); 
+            //存储上传文件
+            Tupload tupload = new Tupload();
+            Collection availableItems = tuploadService.queryItems(Tupload.class, "loginname", loginname, "=", "id", 1, 0);
+ 		    tupload = (Tupload)availableItems.iterator().next();
+            tupload.setLoginname(loginname);
+            while(iter.hasNext()){  
+                //记录上传过程起始时的时间，用来计算上传时间  
+                int pre = (int) System.currentTimeMillis(); 
+                //取得上传文件  
+                MultipartFile file = multiRequest.getFile(iter.next());
+                //临时存储路径
+                String path = null; 
+                if(file != null){  
+                    //取得当前上传文件的文件名称  
+                    String myFileName = file.getOriginalFilename();  
+                    //如果名称不为"",说明该文件存在，否则说明该文件不存在  
+                    if(myFileName.trim() !=""){  
+                        System.out.println(myFileName);  
+                        //重命名上传后的文件名  
+                        String fileName = file.getOriginalFilename();  
+                        System.out.println(file.getName());
+                        //定义上传路径  request.getSession().getServletContext().getRealPath("/WEB-INF/upload/" + loginname);
+                        String dir = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/" + loginname);
+                        File fileDir = new File(dir);
+                        if (!fileDir.exists() && !fileDir.isDirectory()) {
+							fileDir.mkdirs();
+						}
+                        path = dir + File.separator + fileName;
+                        System.out.println(path);
+                        File localFile = new File(path);  
+                        file.transferTo(localFile);  
+                    }else{
+                    	continue;
+                    }
+                }
+                
+                //记录上传该文件后的时间  
+                int finaltime = (int) System.currentTimeMillis();  
+                System.out.println(finaltime - pre);
+                switch (file.getName()) {
+				case "file1":
+					tupload.setFile1(file.getOriginalFilename());
+					break;
+				case "file2":
+					tupload.setFile2(file.getOriginalFilename());
+					break;
+				case "file3":
+					tupload.setFile3(file.getOriginalFilename());
+					break;
+				case "file4":
+					tupload.setFile4(file.getOriginalFilename());
+					break;
+				case "file5":
+					tupload.setFile5(file.getOriginalFilename());
+					break;
+				case "file6":
+					tupload.setFile6(file.getOriginalFilename());
+					break;
+				case "file7":
+					tupload.setFile7(file.getOriginalFilename());
+					break;
+				case "file8":
+					tupload.setFile8(file.getOriginalFilename());
+					break;
+				case "file9":
+					tupload.setFile9(file.getOriginalFilename());
+					break;
+				case "file10":
+					tupload.setFile10(file.getOriginalFilename());
+					break;
+				case "file11":
+					tupload.setFile11(file.getOriginalFilename());
+					break;
+				case "file12":
+					tupload.setFile12(file.getOriginalFilename());
+					break;
+				case "file13":
+					tupload.setFile13(file.getOriginalFilename());
+					break;
+				case "file14":
+					tupload.setFile14(file.getOriginalFilename());
+					break;
+				default:
+					break;
+				}
+            } 
+            Date nowTime = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String retStrFormatNowDate = sdFormatter.format(nowTime);
+            tupload.setUploadtime(retStrFormatNowDate);
+            if ((tupload.getFile1().isEmpty() || tupload.getFile2().isEmpty() 
+            	||tupload.getFile3().isEmpty() ||tupload.getFile4().isEmpty()
+            	||tupload.getFile5().isEmpty() ||tupload.getFile6().isEmpty()
+            	||tupload.getFile7().isEmpty() ||tupload.getFile8().isEmpty()
+            	||tupload.getFile9().isEmpty()) ) {
+            	if (tuploadService.getRows(Tupload.class, "loginname", tupload.getLoginname(), "=") != 0) {
+         		    
+            		tuploadService.update(tupload);
+				}else{
+					tuploadService.save(tupload);
+				}
+			}
+        }  
+        System.out.println(String.valueOf(System.currentTimeMillis()));
+        return "unauth/manage/user-upload";
+	}
+	
+	@RequestMapping("toupload")
+	public String toupload(){
+		
+		return "unauth/manage/upload";
+	}
+	
+	@RequestMapping("/download")
+	public String download(HttpServletRequest request,
+            HttpServletResponse response){
+		response.setCharacterEncoding("utf-8");
+        response.setContentType("multipart/form-data");
+        String fileName = request.getParameter("fileName");
+        response.setHeader("Content-Disposition", "attachment;fileName="
+                + fileName);
+        try {
+           // String path = Thread.currentThread().getContextClassLoader()
+           //         .getResource("").getPath()
+           //         + "download";//这个download目录为啥建立在classes下的
+        	String path = "G:/";
+            InputStream inputStream = new FileInputStream(new File(path
+                    + File.separator + fileName));
+ 
+            OutputStream os = response.getOutputStream();
+            byte[] b = new byte[2048];
+            int length;
+            while ((length = inputStream.read(b)) > 0) {
+                os.write(b, 0, length);
+            }
+ 
+             // 这里主要关闭。
+            os.close();
+ 
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return "unauth/manage/download";
+	}
+	
+	@RequestMapping("todownload")
+	public String todownload(){
+		return "unauth/manage/download";
 	}
 	
 	//测试1,两个参数

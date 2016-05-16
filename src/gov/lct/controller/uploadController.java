@@ -34,7 +34,7 @@ public class uploadController {
 	@Autowired
 	private TuploadService tuploadService;
 	
-	@RequestMapping("/upload")
+	@RequestMapping("/upload111")
 	public String upload(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
 		String loginname = null;
 		try {
@@ -42,7 +42,7 @@ public class uploadController {
 			//String realname = session.getAttribute("realname").toString();
 			loginname = session.getAttribute("loginname").toString();		
 			//System.out.println(realname);
-			//System.out.println(loginname);
+			System.out.println(loginname);
 	        //System.out.println(file);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -108,16 +108,16 @@ public class uploadController {
                 tuploadService.save(tupload);
             }  
         }  
-        return "unauth/manage/upload";
+        return "../unauth/manage/userupload";
 	}
 	
-	@RequestMapping("toupload")
+	@RequestMapping("toupload111")
 	public String toupload(){
 		
 		return "unauth/manage/upload";
 	}
 	
-	@RequestMapping("/download")
+	@RequestMapping("/download111")
 	public String download(HttpServletRequest request,
             HttpServletResponse response){
 		response.setCharacterEncoding("utf-8");
@@ -149,10 +149,10 @@ public class uploadController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-		return "unauth/manage/download";
+		return "unauth/manage/download111";
 	}
 	
-	@RequestMapping("todownload")
+	@RequestMapping("todownload111")
 	public String todownload(){
 		return "unauth/manage/download";
 	}

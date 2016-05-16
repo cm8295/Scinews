@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>资料上传</title>
 </head>
 
 <frameset NAME="global" rows="111,*,32" framespacing="0" frameborder="0" border="10">
@@ -15,7 +15,7 @@
 			noresize="noresize" id="leftFrame" title="leftFrame" target="main"/>
 		<frame name="split" scrolling="no" noresize src="split"
 			marginwidth="0" marginheight="0" />
-		<frame name="userstate" src="userupload" scrolling="yes" />
+		<frame name="userupload" src="userupload" scrolling="yes" />
 	</frameset>
 	<frame src="bottom" name="bottom" scrolling="No"
 		noresize="noresize" id="botFrame" title="botFrame" />

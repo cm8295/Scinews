@@ -8,17 +8,17 @@ System.out.print(basePath);
 <html>
 <head>
 <base href="<%=basePath%>"/>
-<base target="userState"/>
+<base target="userupload"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="/css/adm.css" />
-<title>Insert title here</title>
+<title></title>
 </head>
 <body>
 
 <div id="adm-left-menubg">
   <div id="adm-left-menu-header" title="用户菜单"></div>
-  <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)">状态</div>
-      <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)"><a href="manage/pageUpload">资料提交</a></div>
+  <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)"><a href="manage/userstate">状态</a></div>
+      <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)"><a href="manage/userupload">资料提交</a></div>
       <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)"></div>
 
 </div>
