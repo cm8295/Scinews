@@ -345,7 +345,52 @@ public class ManageController {
 	
 	@RequestMapping(value="/userupload")
 	public String pageUpload(HttpServletRequest request) throws Exception{
-
+		String loginname = null;
+		try {
+			HttpSession session = request.getSession();	
+			//String realname = session.getAttribute("realname").toString();
+			loginname = session.getAttribute("loginname").toString();	
+			//System.out.println(realname);
+			System.out.println(loginname);
+			if (loginname.equals(null)) {
+				return "/error";
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			return "/error";
+		}
+		//设置时间
+        request.setAttribute("endtime", "2015-05-05 21:12:12");
+        //
+        
+        Collection availableItems = null;
+		availableItems = tuploadService.queryItems(Tupload.class, "loginname", loginname, "=", "id", 50, 0);
+		Iterator patents = null;
+		if(availableItems!=null)
+		{
+			patents = availableItems.iterator();
+		}
+		while(patents.hasNext())
+		{
+			 Tupload patentinfo = (Tupload)patents.next();
+			 request.setAttribute("file1", patentinfo.getFile1());
+			 request.setAttribute("file2", patentinfo.getFile2());
+			 request.setAttribute("file3", patentinfo.getFile3());
+			 request.setAttribute("file4", patentinfo.getFile4());
+			 request.setAttribute("file5", patentinfo.getFile5());
+			 request.setAttribute("file6", patentinfo.getFile6());
+			 request.setAttribute("file7", patentinfo.getFile7());
+			 request.setAttribute("file8", patentinfo.getFile8());
+			 request.setAttribute("file9", patentinfo.getFile9());
+			 request.setAttribute("file10", patentinfo.getFile10());
+			 request.setAttribute("file11", patentinfo.getFile11());
+			 request.setAttribute("file12", patentinfo.getFile12());
+			 request.setAttribute("file13", patentinfo.getFile13());
+			 request.setAttribute("file14", patentinfo.getFile14());
+			 request.setAttribute("uploadtime", patentinfo.getUploadtime());
+		}
+		
+	    //request.setAttribute("availableItems", availableItems); 
 		return "unauth/manage/user-upload";
 	}
 	
@@ -380,8 +425,10 @@ public class ManageController {
             Iterator<String> iter = multiRequest.getFileNames(); 
             //存储上传文件
             Tupload tupload = new Tupload();
-            Collection availableItems = tuploadService.queryItems(Tupload.class, "loginname", loginname, "=", "id", 1, 0);
- 		    tupload = (Tupload)availableItems.iterator().next();
+            if (tuploadService.getRows(Tupload.class, "loginname", loginname, "=") != 0){
+            	Collection availableItems = tuploadService.queryItems(Tupload.class, "loginname", loginname, "=", "id", 1, 0);
+     		    tupload = (Tupload)availableItems.iterator().next();
+            }
             tupload.setLoginname(loginname);
             while(iter.hasNext()){  
                 //记录上传过程起始时的时间，用来计算上传时间  
@@ -468,21 +515,15 @@ public class ManageController {
             SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String retStrFormatNowDate = sdFormatter.format(nowTime);
             tupload.setUploadtime(retStrFormatNowDate);
-            if ((tupload.getFile1().isEmpty() || tupload.getFile2().isEmpty() 
-            	||tupload.getFile3().isEmpty() ||tupload.getFile4().isEmpty()
-            	||tupload.getFile5().isEmpty() ||tupload.getFile6().isEmpty()
-            	||tupload.getFile7().isEmpty() ||tupload.getFile8().isEmpty()
-            	||tupload.getFile9().isEmpty()) ) {
-            	if (tuploadService.getRows(Tupload.class, "loginname", tupload.getLoginname(), "=") != 0) {
+            if (tuploadService.getRows(Tupload.class, "loginname", loginname, "=") != 0) {
          		    
-            		tuploadService.update(tupload);
-				}else{
-					tuploadService.save(tupload);
-				}
+            	tuploadService.update(tupload);
+			}else{
+				tuploadService.save(tupload);
 			}
         }  
         System.out.println(String.valueOf(System.currentTimeMillis()));
-        return "unauth/manage/user-upload";
+        return "unauth/manage/user-menu";
 	}
 	
 	@RequestMapping("toupload")

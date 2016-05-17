@@ -1,12 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>   
+<%@ page import="java.util.Collection"%>
+<%@ page import="gov.lct.model.Tupload"%>
+<%
+String endtime = (String)request.getAttribute("endtime");
+String file1 = (String)request.getAttribute("file1");
+String file2 = (String)request.getAttribute("file2");
+String file3 = (String)request.getAttribute("file3");
+String file4 = (String)request.getAttribute("file4");
+String file5 = (String)request.getAttribute("file5");
+String file6 = (String)request.getAttribute("file6");
+String file7 = (String)request.getAttribute("file7");
+String file8 = (String)request.getAttribute("file8");
+String file9 = (String)request.getAttribute("file9");
+String file10 = (String)request.getAttribute("file10");
+String file11 = (String)request.getAttribute("file11");
+String file12 = (String)request.getAttribute("file12");
+String file13 = (String)request.getAttribute("file13");
+String file14 = (String)request.getAttribute("file14");
+String uploadtime = (String)request.getAttribute("uploadtime");
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>文件上传</title>
-<script type="text/javascript" src="../js/jquery-1.11.1.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>文件上传</title>
+<script type="text/javascript" src="../js/jquery-1.11.1.js"  language="javascript">
+</script>
+<script type="text/javascript" language="javascript">
+function bn_click(){
+	//alert("error");
+	//var user_name=$("#bn1").attr("value");
+	//alert(user_name);
+	//$(".newfile").css('display','block');
+    $(".newFile").toggle();
+}
+function check(){
+	
+}
+</script>
 </head>
 <body>
 	<form name="userForm2" action="/Scinews/manage/upload"
@@ -18,10 +51,15 @@
 					style="height: 34px; background-image: url(../../images/main_header.gif); border-bottom: 1px solid #cfd8e0; padding: 0px">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
+						    <td align="left" class="white" style="padding-left: 20px">
+								<label name="username">材料提交截至时间：<%=endtime%></label>
+							</td>
 							<td align="right" class="white" style="padding-right: 20px">
 								<label name="username">用戶名：<%=request.getSession().getAttribute("loginname")%></label>
 							</td>
 						</tr>
+						
+						
 					</table>
 				</td>
 			</tr>		
@@ -34,7 +72,8 @@
 								<th align="center"><input type="checkbox" name="checkbox"
 									id="checkbox"></th>
 								<th align="center">文件类别</th>
-								<th align="center">文件</th>
+								<th align="center">已上传文件</th>
+								<th align="center" class="newFile" id="newFile" style="display:none">新上传文件</th>
 								<th align="center">上传时间</th>
 								<th align="center">审核状态</th>
 								<th width="200" align="center">操作</th>
@@ -43,12 +82,14 @@
 								<TD align="center"><input type="checkbox" name="checkbox2"
 									id="checkbox2"></TD>
 								<TD align="center">科技查新报告</TD>
-								<TD align="center"><input type="file" name="file1" id="file1"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file1%>>
+								</TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file1" id="file1"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">通过</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
-										onClick="javascript:if (confirm('查看该信息？')) location.href='';else return;">查看</BUTTON>
+										onClick="javascript:if (confirm('查看该信息？')) location.href='/manage/require';else return;">查看</BUTTON>
 									<BUTTON style="height: 21px; font-size: 12px"
 										onClick="javascript:if (confirm('编辑该信息？')) location.href='01_edit.html';else return;">编辑</BUTTON>
 									<BUTTON style="height: 21px; font-size: 12px"
@@ -60,8 +101,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox7"
 									id="checkbox7"></TD>
 								<TD align="center">研制报告</TD>
-								<TD align="center"><input type="file" name="file2" id="file2"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file2%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file2" id="file2"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -77,8 +119,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox8"
 									id="checkbox8"></TD>
 								<TD align="center">背景材料</TD>
-								<TD align="center"><input type="file" name="file3" id="file3"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file3%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file3" id="file3"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -94,8 +137,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox9"
 									id="checkbox9"></TD>
 								<TD align="center">成果的审批文件</TD>
-								<TD align="center"><input type="file" name="file4" id="file4"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file4%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file4" id="file4"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -111,8 +155,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox10"
 									id="checkbox10"></TD>
 								<TD align="center">论文发表收录及引用证明材料</TD>
-								<TD align="center"><input type="file" name="file5" id="file5"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file5%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file5" id="file5"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -128,8 +173,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox9"
 									id="checkbox9"></TD>
 								<TD align="center">知识产权证明材料</TD>
-								<TD align="center"><input type="file" name="file6" id="file6"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file6%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file6" id="file6"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -145,8 +191,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox10"
 									id="checkbox10"></TD>
 								<TD align="center">推广应用所产生的经济效益或者社会效益</TD>
-								<TD align="center"><input type="file" name="file7" id="file7"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file7%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file7" id="file7"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -162,8 +209,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox9"
 									id="checkbox9"></TD>
 								<TD align="center">奖项证明材料</TD>
-								<TD align="center"><input type="file" name="file8" id="file8"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file8%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file8" id="file8"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -179,8 +227,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox10"
 									id="checkbox10"></TD>
 								<TD align="center">著作证明材料</TD>
-								<TD align="center"><input type="file" name="file9" id="file9"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file9%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file9" id="file9"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -198,8 +247,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox9"
 									id="checkbox9"></TD>
 								<TD align="center">测试分析报告</TD>
-								<TD align="center"><input type="file" name="file10" id="file10"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file10%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file10" id="file10"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -215,8 +265,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox10"
 									id="checkbox10"></TD>
 								<TD align="center">主要实验</TD>
-								<TD align="center"><input type="file" name="file11" id="file11"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file11%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file11" id="file11"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -232,8 +283,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox9"
 									id="checkbox9"></TD>
 								<TD align="center">测试记录报告</TD>
-								<TD align="center"><input type="file" name="file12" id="file12"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file12%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file12" id="file12"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -249,8 +301,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox10"
 									id="checkbox10"></TD>
 								<TD align="center">产品检测报告</TD>
-								<TD align="center"><input type="file" name="file13" id="file13"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file13%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file13" id="file13"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -266,8 +319,9 @@
 								<TD align="center"><input type="checkbox" name="checkbox9"
 									id="checkbox9"></TD>
 								<TD align="center">环境生态效益证明</TD>
-								<TD align="center"><input type="file" name="file14" id="file14"></TD>
-								<TD align="center"></TD>
+								<TD align="center"><input type="text" name="tfile" id="tfile" value=<%=file14%>></TD>
+								<TD align="center" class="newFile" style="display:none"><input type="file" name="file14" id="file14"></TD>
+								<TD align="center"><%=uploadtime%></TD>
 								<TD align="center">待审核</TD>
 								<TD width="200" align="center"><BUTTON
 										style="height: 21px; font-size: 12px"
@@ -284,6 +338,7 @@
 				</td>
 			</tr>
 		</table>
+		<input type="button" class="bn1" id="bn1" value="增加..."  onClick="bn_click()">
 		<input type="submit" name="submit" value="上传">
 	</form>
 
