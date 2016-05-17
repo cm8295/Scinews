@@ -4,6 +4,7 @@ import gov.lct.model.Trole;
 import gov.lct.model.Tupload;
 import gov.lct.service.TroleService;
 import gov.lct.service.TuploadService;
+import gov.lct.util.StringProcess;
 import gov.lct.model.Trequire;
 import gov.lct.service.TrequireService;
 import gov.lct.model.Tpatentbasicinfo;
@@ -35,6 +36,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.sparql.util.Convert;
 
 /**
  * @date 2016-04-22
@@ -294,7 +296,7 @@ public class ManageController {
 		  {
 			  Collection availableItems = null;
 			  availableItems = patentService.queryItems(Tpatentbasicinfo.class, "status", "1", "=", "patent_an", 50, 0);
-		    request.setAttribute("availableItems", availableItems); 
+		      request.setAttribute("availableItems", availableItems); 
 		  }
 		}	    
 		
@@ -369,26 +371,73 @@ public class ManageController {
 		if(availableItems!=null)
 		{
 			patents = availableItems.iterator();
+			while(patents.hasNext())
+			{
+				 Tupload upload = (Tupload)patents.next();
+				 request.setAttribute("file1", StringProcess.getString(upload.getFile1()));
+				 request.setAttribute("file2", StringProcess.getString(upload.getFile2()));
+				 request.setAttribute("file3", StringProcess.getString(upload.getFile3()));
+				 request.setAttribute("file4", StringProcess.getString(upload.getFile4()));
+				 request.setAttribute("file5", StringProcess.getString(upload.getFile5()));
+				 request.setAttribute("file6", StringProcess.getString(upload.getFile6()));
+				 request.setAttribute("file7", StringProcess.getString(upload.getFile7()));
+				 request.setAttribute("file8", StringProcess.getString(upload.getFile8()));
+				 request.setAttribute("file9", StringProcess.getString(upload.getFile9()));
+				 request.setAttribute("file10", StringProcess.getString(upload.getFile10()));
+				 request.setAttribute("file11", StringProcess.getString(upload.getFile11()));
+				 request.setAttribute("file12", StringProcess.getString(upload.getFile12()));
+				 request.setAttribute("file13", StringProcess.getString(upload.getFile13()));
+				 request.setAttribute("file14", StringProcess.getString(upload.getFile14()));
+				 request.setAttribute("state1", StringProcess.getString(upload.getState1()));
+				 request.setAttribute("state2", StringProcess.getString(upload.getState2()));
+				 request.setAttribute("state3", StringProcess.getString(upload.getState3()));
+				 request.setAttribute("state4", StringProcess.getString(upload.getState4()));
+				 request.setAttribute("state5", StringProcess.getString(upload.getState5()));
+				 request.setAttribute("state6", StringProcess.getString(upload.getState6()));
+				 request.setAttribute("state7", StringProcess.getString(upload.getState7()));
+				 request.setAttribute("state8", StringProcess.getString(upload.getState8()));
+				 request.setAttribute("state9", StringProcess.getString(upload.getState9()));
+				 request.setAttribute("state10", StringProcess.getString(upload.getState10()));
+				 request.setAttribute("state11", StringProcess.getString(upload.getState11()));
+				 request.setAttribute("state12", StringProcess.getString(upload.getState12()));
+				 request.setAttribute("state13", StringProcess.getString(upload.getState13()));
+				 request.setAttribute("state14", StringProcess.getString(upload.getState14()));
+				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
+				 request.setAttribute("suggestion", StringProcess.getString(upload.getSuggestion()));
+			}
+		}else{
+			request.setAttribute("file1", "");
+			 request.setAttribute("file2", "");
+			 request.setAttribute("file3", "");
+			 request.setAttribute("file4", "");
+			 request.setAttribute("file5", "");
+			 request.setAttribute("file6", "");
+			 request.setAttribute("file7", "");
+			 request.setAttribute("file8", "");
+			 request.setAttribute("file9", "");
+			 request.setAttribute("file10", "");
+			 request.setAttribute("file11", "");
+			 request.setAttribute("file12", "");
+			 request.setAttribute("file13", "");
+			 request.setAttribute("file14", "");
+			 request.setAttribute("state1", "");
+			 request.setAttribute("state2", "");
+			 request.setAttribute("state3", "");
+			 request.setAttribute("state4", "");
+			 request.setAttribute("state5", "");
+			 request.setAttribute("state6", "");
+			 request.setAttribute("state7", "");
+			 request.setAttribute("state8", "");
+			 request.setAttribute("state9", "");
+			 request.setAttribute("state10", "");
+			 request.setAttribute("state11", "");
+			 request.setAttribute("state12", "");
+			 request.setAttribute("state13", "");
+			 request.setAttribute("state14", "");
+			 request.setAttribute("uploadtime", "");
+			 request.setAttribute("suggestion", "");
 		}
-		while(patents.hasNext())
-		{
-			 Tupload patentinfo = (Tupload)patents.next();
-			 request.setAttribute("file1", patentinfo.getFile1());
-			 request.setAttribute("file2", patentinfo.getFile2());
-			 request.setAttribute("file3", patentinfo.getFile3());
-			 request.setAttribute("file4", patentinfo.getFile4());
-			 request.setAttribute("file5", patentinfo.getFile5());
-			 request.setAttribute("file6", patentinfo.getFile6());
-			 request.setAttribute("file7", patentinfo.getFile7());
-			 request.setAttribute("file8", patentinfo.getFile8());
-			 request.setAttribute("file9", patentinfo.getFile9());
-			 request.setAttribute("file10", patentinfo.getFile10());
-			 request.setAttribute("file11", patentinfo.getFile11());
-			 request.setAttribute("file12", patentinfo.getFile12());
-			 request.setAttribute("file13", patentinfo.getFile13());
-			 request.setAttribute("file14", patentinfo.getFile14());
-			 request.setAttribute("uploadtime", patentinfo.getUploadtime());
-		}
+		
 		
 	    //request.setAttribute("availableItems", availableItems); 
 		return "unauth/manage/user-upload";
@@ -467,45 +516,59 @@ public class ManageController {
                 switch (file.getName()) {
 				case "file1":
 					tupload.setFile1(file.getOriginalFilename());
+					tupload.setState1("待审核");
 					break;
 				case "file2":
 					tupload.setFile2(file.getOriginalFilename());
+					tupload.setState2("待审核");
 					break;
 				case "file3":
 					tupload.setFile3(file.getOriginalFilename());
+					tupload.setState3("待审核");
 					break;
 				case "file4":
 					tupload.setFile4(file.getOriginalFilename());
+					tupload.setState4("待审核");
 					break;
 				case "file5":
 					tupload.setFile5(file.getOriginalFilename());
+					tupload.setState5("待审核");
 					break;
 				case "file6":
 					tupload.setFile6(file.getOriginalFilename());
+					tupload.setState6("待审核");
 					break;
 				case "file7":
 					tupload.setFile7(file.getOriginalFilename());
+					tupload.setState7("待审核");
 					break;
 				case "file8":
 					tupload.setFile8(file.getOriginalFilename());
+					tupload.setState8("待审核");
 					break;
 				case "file9":
 					tupload.setFile9(file.getOriginalFilename());
+					tupload.setState9("待审核");
 					break;
 				case "file10":
 					tupload.setFile10(file.getOriginalFilename());
+					tupload.setState10("待审核");
 					break;
 				case "file11":
 					tupload.setFile11(file.getOriginalFilename());
+					tupload.setState11("待审核");
 					break;
 				case "file12":
 					tupload.setFile12(file.getOriginalFilename());
+					tupload.setState12("待审核");
 					break;
 				case "file13":
 					tupload.setFile13(file.getOriginalFilename());
+					tupload.setState13("待审核");
 					break;
 				case "file14":
 					tupload.setFile14(file.getOriginalFilename());
+					tupload.setState14("待审核");
 					break;
 				default:
 					break;
@@ -523,7 +586,84 @@ public class ManageController {
 			}
         }  
         System.out.println(String.valueOf(System.currentTimeMillis()));
-        return "unauth/manage/user-menu";
+        //设置时间
+        request.setAttribute("endtime", "2015-05-05 21:12:12");
+        //
+        
+        Collection availableItems = null;
+		availableItems = tuploadService.queryItems(Tupload.class, "loginname", loginname, "=", "id", 50, 0);
+		Iterator patents = null;
+		if(availableItems!=null)
+		{
+			patents = availableItems.iterator();
+			while(patents.hasNext())
+			{
+				 Tupload upload = (Tupload)patents.next();
+				 request.setAttribute("file1", StringProcess.getString(upload.getFile1()));
+				 request.setAttribute("file2", StringProcess.getString(upload.getFile2()));
+				 request.setAttribute("file3", StringProcess.getString(upload.getFile3()));
+				 request.setAttribute("file4", StringProcess.getString(upload.getFile4()));
+				 request.setAttribute("file5", StringProcess.getString(upload.getFile5()));
+				 request.setAttribute("file6", StringProcess.getString(upload.getFile6()));
+				 request.setAttribute("file7", StringProcess.getString(upload.getFile7()));
+				 request.setAttribute("file8", StringProcess.getString(upload.getFile8()));
+				 request.setAttribute("file9", StringProcess.getString(upload.getFile9()));
+				 request.setAttribute("file10", StringProcess.getString(upload.getFile10()));
+				 request.setAttribute("file11", StringProcess.getString(upload.getFile11()));
+				 request.setAttribute("file12", StringProcess.getString(upload.getFile12()));
+				 request.setAttribute("file13", StringProcess.getString(upload.getFile13()));
+				 request.setAttribute("file14", StringProcess.getString(upload.getFile14()));
+				 request.setAttribute("state1", StringProcess.getString(upload.getState1()));
+				 request.setAttribute("state2", StringProcess.getString(upload.getState2()));
+				 request.setAttribute("state3", StringProcess.getString(upload.getState3()));
+				 request.setAttribute("state4", StringProcess.getString(upload.getState4()));
+				 request.setAttribute("state5", StringProcess.getString(upload.getState5()));
+				 request.setAttribute("state6", StringProcess.getString(upload.getState6()));
+				 request.setAttribute("state7", StringProcess.getString(upload.getState7()));
+				 request.setAttribute("state8", StringProcess.getString(upload.getState8()));
+				 request.setAttribute("state9", StringProcess.getString(upload.getState9()));
+				 request.setAttribute("state10", StringProcess.getString(upload.getState10()));
+				 request.setAttribute("state11", StringProcess.getString(upload.getState11()));
+				 request.setAttribute("state12", StringProcess.getString(upload.getState12()));
+				 request.setAttribute("state13", StringProcess.getString(upload.getState13()));
+				 request.setAttribute("state14", StringProcess.getString(upload.getState14()));
+				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
+				 request.setAttribute("suggestion", StringProcess.getString(upload.getSuggestion()));
+			}
+		}else{
+			request.setAttribute("file1", "");
+			 request.setAttribute("file2", "");
+			 request.setAttribute("file3", "");
+			 request.setAttribute("file4", "");
+			 request.setAttribute("file5", "");
+			 request.setAttribute("file6", "");
+			 request.setAttribute("file7", "");
+			 request.setAttribute("file8", "");
+			 request.setAttribute("file9", "");
+			 request.setAttribute("file10", "");
+			 request.setAttribute("file11", "");
+			 request.setAttribute("file12", "");
+			 request.setAttribute("file13", "");
+			 request.setAttribute("file14", "");
+			 request.setAttribute("state1", "");
+			 request.setAttribute("state2", "");
+			 request.setAttribute("state3", "");
+			 request.setAttribute("state4", "");
+			 request.setAttribute("state5", "");
+			 request.setAttribute("state6", "");
+			 request.setAttribute("state7", "");
+			 request.setAttribute("state8", "");
+			 request.setAttribute("state9", "");
+			 request.setAttribute("state10", "");
+			 request.setAttribute("state11", "");
+			 request.setAttribute("state12", "");
+			 request.setAttribute("state13", "");
+			 request.setAttribute("state14", "");
+			 request.setAttribute("uploadtime", "");
+			 request.setAttribute("suggestion", "");
+		}
+		
+        return "unauth/manage/user-upload";
 	}
 	
 	@RequestMapping("toupload")
