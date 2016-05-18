@@ -1,13 +1,16 @@
 package gov.lct.controller;
 
 import gov.lct.model.Trole;
+import gov.lct.model.Ttimeset;
 import gov.lct.model.Tupload;
 import gov.lct.service.TroleService;
+import gov.lct.service.TtimesetService;
 import gov.lct.service.TuploadService;
 import gov.lct.util.StringProcess;
 import gov.lct.model.Trequire;
 import gov.lct.service.TrequireService;
 import gov.lct.model.Tpatentbasicinfo;
+import gov.lct.service.TevaluationService;
 import gov.lct.service.TpatentbasicinfoService;
 
 import java.io.File;
@@ -35,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.hp.hpl.jena.n3.RelativeURIException;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.sparql.util.Convert;
 
@@ -54,6 +58,10 @@ public class ManageController {
 	private TpatentbasicinfoService patentService;
 	@Autowired
 	private TuploadService tuploadService;
+	@Autowired
+	private TtimesetService ttimesetServer;
+	@Autowired
+	private TevaluationService tevaluationService;
 	
 	
 	@RequestMapping(value="/index")
@@ -328,6 +336,11 @@ public class ManageController {
 	@RequestMapping(value="/information")
 	public String subInformation(HttpServletRequest request){
 		return "unauth/manage/information";
+	}
+	
+	@RequestMapping(value="/admuserdata")
+	public String admuserdata(HttpServletRequest request) throws Exception{
+		return "unauth/manage/adm-userdata";
 	}
 	
 	@RequestMapping(value="/usermenu")

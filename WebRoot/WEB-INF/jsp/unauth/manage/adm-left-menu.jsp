@@ -45,13 +45,15 @@ function stats_submenu(){
       <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)">专家增加</div>
       <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)">专家修改</div>
       <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)">专家删除</div>
-  <div class="adm-left-menu-bg" id="adm-left-menu-bg-3" onmouseover="cg_adm_left(3)" onmouseout="cc_adm_left(3)">专利管理</div>
+  <div class="adm-left-menu-bg" id="adm-left-menu-bg-3" onmouseover="cg_adm_left(3)" onmouseout="cc_adm_left(3)"><a href="manage/patentmanagement">专利管理</a></div>
       <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)"><a href="manage/patentmanage">推荐专利查看</a></div>
       <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)"><a href="manage/patentrecommend">专利推荐</a></div>
   <div class="adm-left-menu-bg" id="adm-left-menu-bg-3" onmouseover="cg_adm_left(3)" onmouseout="cc_adm_left(3)">需求管理</div>
       <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)"><a href="manage/require">需求增加</a></div>
       <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)"><a href="manage/requireauth">需求审核</a></div>
       <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)">需求删除</div>
+      <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)"><a href="manage/admuserdata">用户材料提交</a></div>
+      <div class="adm-left-menu-bg" id="adm-left-menu-bg-2" onmouseover="cg_adm_left(2)" onmouseout="cc_adm_left(2)"><a href="manage/admuserdata"></a></div>
 
 </div>
 </body>

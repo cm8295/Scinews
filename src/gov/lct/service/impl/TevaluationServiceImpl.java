@@ -10,22 +10,18 @@ import gov.lct.generic.GenericServiceImpl;
 import gov.lct.model.Tevaluation;
 import gov.lct.service.TevaluationService;;
 
-@Service("ttimesetService")
+@Service("tevaluationService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TevaluationServiceImpl extends GenericServiceImpl<Tevaluation, String> implements TevaluationService{
 	@Autowired
 	private TevaluationDao tevaluationDao;
 
-	public TevaluationDao getTuploadDao() {
+	public TevaluationDao getTevaluationDao() {
 		return tevaluationDao;
 	}
 
-	public void setTuploadDao(TevaluationDao tevaluationDao) {
+	public void setTevaluationDao(TevaluationDao tevaluationDao) {
 		this.tevaluationDao = tevaluationDao;
 		super.setGenericDao(tevaluationDao);
 	}
-	
-	
-
-
 }

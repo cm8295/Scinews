@@ -17,11 +17,11 @@ public class TtimesetServiceImpl extends GenericServiceImpl<Ttimeset, String> im
 	@Autowired
 	private TtimesetDao ttimesetDao;
 
-	public TtimesetDao getTuploadDao() {
+	public TtimesetDao getTtimesetDao() {
 		return ttimesetDao;
 	}
 
-	public void setTuploadDao(TtimesetDao ttimesetDao) {
+	public void setTtimesetDao(TtimesetDao ttimesetDao) {
 		this.ttimesetDao = ttimesetDao;
 		super.setGenericDao(ttimesetDao);
 	}

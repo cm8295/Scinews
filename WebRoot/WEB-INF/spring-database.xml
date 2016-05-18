@@ -39,7 +39,9 @@
                 <value>gov.lct.model.Tmasenterprise</value>		
                 <value>gov.lct.model.Trole</value>    
                 <value>gov.lct.model.Trequire</value>   
-                <value>gov.lct.model.Tupload</value>           						
+                <value>gov.lct.model.Tupload</value>   
+                <value>gov.lct.model.Ttimeset</value>
+                <value>gov.lct.model.Tevaluation</value>        						
 			</list>
 		</property>
 		<property name="hibernateProperties">
