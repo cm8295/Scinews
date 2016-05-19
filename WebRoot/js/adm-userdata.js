@@ -37,7 +37,7 @@
 	}
 	$('#patient_list').datagrid({   
 		title:'病者列表1',
-	    url:'/Scinews/manage/admuserdata',
+	    url:'/Scinews/manage/patentmanagement',
 	    width:content_width,
 	    rownumbers:true,
 	    fitColumns:true,
@@ -50,24 +50,16 @@
 	    striped:true,
 	    toolbar:'#searchcondition',
 	    columns:[[
-	              {field:'name',title:'姓名',width:widths,align:'center',sortable:false},
-	              {field:'sex',title:'性别',width:widths,align:'center',sortable:true,
-	            	  formatter: function(value,row,index){
-	            		  if(value=='F'){
-	            			  return "女";
-	            		  }else{
-	            			  return "男";
-	            		  }
-	            	  }
-	              },   
-	              {field:'age',title:'年龄',width:widths,align:'center'},   
-	              {field:'height',title:'身高',width:widths,align:'center'},
-	              {field:'weight',title:'体重',width:widths,align:'center'},
-	              {field:'bpm',title:'bpm',width:widths,align:'center'},
-	              {field:'bpd',title:'bpd',width:widths,align:'center'},
-	              {field:'date',title:'日期',width:widths,align:'center'},
-	              {field:'ope',title:'ope',width:widths,align:'center'},
-	              {field:'_operate',title:'操作',width:widths,formatter:formatOper,align:'center'},
+	              {field:'loginname',title:'姓名',width:widths,align:'center',sortable:false},
+	              {field:'file1',title:'文件1',width:widths,align:'center',sortable:true},   
+	              {field:'file2',title:'年龄',width:widths,align:'center'},   
+	              {field:'file3',title:'身高',width:widths,align:'center'},
+	              {field:'file4',title:'体重',width:widths,align:'center'},
+	              {field:'file5',title:'bpm',width:widths,align:'center'},
+	              {field:'file6',title:'bpd',width:widths,align:'center'},
+	              {field:'file7',title:'日期',width:widths,align:'center'},
+	              {field:'file8',title:'ope',width:widths,align:'center'},
+	              {field:'file9',title:'操作',width:widths,formatter:formatOper,align:'center'},
 	              ]],
 	    onDblClickRow: function(rowIndex, rowData){
 	    	numToString(rowData);

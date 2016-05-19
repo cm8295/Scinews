@@ -9,14 +9,38 @@ String path_content = request.getContextPath();
 String basePath_content = request.getScheme()+"://"+request.getServerName()+":"+
 		request.getServerPort()+path_content+"/";
 %>
+<script type="text/javascript" src="<%=path_content %>/js/jquery-1.11.1.js"></script>
+<script>
+  $(document).ready(function(){
+	 //$("#tt").load("/Scinews/manage/patentmanagement"); 
+	 //$.get("/Scinews/manage/patentmanagement",function(data,status){
+	//	    alert("Data: " + data + "\nStatus: " + status);
+	//	  });
+	 $.post("/Scinews/manage/patentmanagement",
+			  {
+			    name:"Donald Duck",
+			    city:"Duckburg"
+			  },
+			  function(data,status){
+				JSONObject json = JSONObject.fromObject(data);
+				
+				$("#tt").val(json.toString());
+			    alert("Data: " + data + "\nStatus: " + status);
+			  });
+  });
+</script>
+<!-- 
 <script type="text/javascript" src="<%=path_content %>/js/adm-userdata.js"></script>
+ -->
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
         <title>增加Table行</title>
     </head>
 <script language="javascript">// Example: obj = findObj("image1");
+
 function findObj(theObj, theDoc){ 
+	
 var p, i, foundObj;
     if(!theDoc) theDoc = document; 
     if( (p = theObj.indexOf("?")) > 0 && parent.frames.length) 
@@ -120,6 +144,12 @@ function ClearAllSign(){
 </script>
 
     <body>
+    <div id="content">
+  		<table id="patient_list"></table>
+  	</div>
+  	<div>
+  	    <input type="text" id="tt">
+  	</div>
          <div>
   <table width="613" border="0" cellpadding="2" cellspacing="1" id="SignFrame">
               <tr id="trHeader">

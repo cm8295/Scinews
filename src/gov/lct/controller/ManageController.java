@@ -3,10 +3,14 @@ package gov.lct.controller;
 import gov.lct.model.Trole;
 import gov.lct.model.Ttimeset;
 import gov.lct.model.Tupload;
+import gov.lct.model.Tuser;
 import gov.lct.service.TroleService;
 import gov.lct.service.TtimesetService;
 import gov.lct.service.TuploadService;
+import gov.lct.service.TuserService;
 import gov.lct.util.StringProcess;
+import net.sf.json.JSONArray;
+
 import gov.lct.model.Trequire;
 import gov.lct.service.TrequireService;
 import gov.lct.model.Tpatentbasicinfo;
@@ -19,11 +23,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,9 +44,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import gov.lct.util.*;
 import com.hp.hpl.jena.n3.RelativeURIException;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.sparql.util.Convert;
+
 
 /**
  * @date 2016-04-22
@@ -62,6 +70,8 @@ public class ManageController {
 	private TtimesetService ttimesetServer;
 	@Autowired
 	private TevaluationService tevaluationService;
+	@Autowired
+	private TuserService tuserservice;
 	
 	
 	@RequestMapping(value="/index")
@@ -707,10 +717,8 @@ public class ManageController {
             while ((length = inputStream.read(b)) > 0) {
                 os.write(b, 0, length);
             }
- 
              // 这里主要关闭。
             os.close();
- 
             inputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -723,6 +731,58 @@ public class ManageController {
 	@RequestMapping("todownload")
 	public String todownload(){
 		return "unauth/manage/download";
+	}
+	
+	@RequestMapping("sendEmail")
+	public void sendEmail(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String loginname = null;
+		try {
+			HttpSession session = request.getSession();	
+			//String realname = session.getAttribute("realname").toString();
+			loginname = session.getAttribute("loginname").toString();	
+			//System.out.println(realname);
+			System.out.println(loginname);
+			if (loginname.equals(null)) {
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		String email = request.getParameter("email");
+		String msg = null;
+		try {
+			msg=request.getParameter("msg");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//发送邮件
+		mailSend mSend = new mailSend();
+		
+		if(msg==null){
+			msg = "尊敬的VRSIM用户，您好！\r\n\r\n\r\n\r\n"
+					+ "您在访问VRSIM时点击了“忘记密码”链接，这是一封密码重置确认邮件。\r\n\r\n"
+					+ "您可以通过点击以下链接重置帐户密码:\r\n\r\n"				
+					+ "http://210.75.239.228/rt/FindPwdServlet?id=" + loginname + "&pwd=" + "123456"
+					+ "\r\n"
+					+ "请复制上面链接地址到浏览器地址栏中打开以重置密码。"
+					+ "\r\n\r\n"
+					+ "为保障您的帐号安全，请在24小时内点击该链接，您也可以将链接复制到浏览器地址栏访问。 若如果您并未尝试修改密码，请忽略本邮件，由此给您带来的不便请谅解。\r\n\r\n\r\n"
+					+ "本邮件由系统自动发出，请勿直接回复！\r\n";
+		}
+		 
+		mSend.sendMail(email, "VRSIM系统邮件", msg);
+		response.getWriter().append("1");   //1:发送成功
+		System.out.println("1"); 
+	}
+	
+	@RequestMapping("/patentmanagement")
+	public void patentmanagement(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		List<Tupload> list = tuploadService.findAll(Tupload.class);
+		int len = tuploadService.getRows(Tupload.class);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.getWriter().write(JSONUtil.listToJsonString(list, len));
+		//response.getWriter().write("123");
 	}
 	
 	//测试1,两个参数
