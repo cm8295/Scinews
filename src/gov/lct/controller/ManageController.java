@@ -782,9 +782,9 @@ public class ManageController {
 		}
 		 
 		if (mSend.sendMail(email, "系统邮件", msg)) {
-			//response.getWriter().append("1");   //状态：1:发送成功
+			response.getWriter().append("1");   //状态：1:发送成功
 		} else {
-			//response.getWriter().append("0");   //状态：0:发送失败
+			response.getWriter().append("0");   //状态：0:发送失败
 
 		}
 		System.out.println("1"); 
@@ -798,7 +798,7 @@ public class ManageController {
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		response.getWriter().write(kkk);
+		response.getWriter().write("{\"a\":\"b\"}");
 	}
 		
 	//测试

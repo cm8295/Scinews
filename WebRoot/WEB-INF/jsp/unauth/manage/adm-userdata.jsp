@@ -30,10 +30,10 @@ String basePath_content = request.getScheme()+"://"+request.getServerName()+":"+
               <tr id="trHeader">
                 <td width="27" bgcolor="#96E0E2">序号</td>
                 <td width="64" bgcolor="#96E0E2">用户姓名</td>
-                <td width="98" bgcolor="#96E0E2">电子邮箱</td>
-                <td width="92" bgcolor="#96E0E2">固定电话</td>
-                <td width="86" bgcolor="#96E0E2">移动手机</td>
-                <td width="153" bgcolor="#96E0E2">公司名称</td>
+                <td width="98" bgcolor="#96E0E2">评审专家</td>
+                <td width="92" bgcolor="#96E0E2">已提交资料</td>
+                <td width="86" bgcolor="#96E0E2">时间</td>
+                <td width="153" bgcolor="#96E0E2">意见</td>
                 <td width="57" align="center" bgcolor="#96E0E2">&nbsp;</td>
               </tr>
         </table>

@@ -1,5 +1,5 @@
 ﻿$(function(){
-	//alert("测试");
+	alert("测试");
 	/*$("#add").click(function(){
 		alert("fff");
 		$.post("/Scinews/manage/patentmanagement1",
@@ -13,22 +13,22 @@
 	  });
 	});*/
 	
-	/*$.ajax({
+	$.ajax({
         url: "/Scinews/manage/patentmanagement",
-        data: "name=dfsdf",
+        data: "{\"a\":\"a\"}",
         type: "post",
-        //datatype:'json',
+        datatype:'json',
         //contentType:"application/json",
         success: function (data) {
         	
           $("#tt").val(data);
       	  alert(data);
         }
-    });*/
-	 $.getJSON("/Scinews/manage/patentmanagement", function(data) {
+    });
+	 /*$.getJSON("/Scinews/manage/patentmanagement", function(data) {
 	        $("#tt").append(data.total+"<hr/>");
 	        $("#tt").append(data.loginname+"<hr/>");
-	        /*//jquery解析map数据
+	        //jquery解析map数据
 	        $.each(data.infomap,function(key,value){
 	            $("#mapinfo").append(key+"----"+value+"<br/><hr/>");
 	        });
@@ -38,9 +38,9 @@
 	                    "<div>" + item.id + "</div>" + 
 	                    "<div>" + item.nickname    + "</div>" +
 	                    "<div>" + item.content + "</div><hr/>");
-	        });*/
-	        alert("aaa");
 	        });
+	        //alert("aaa");
+	        });*/
 	$('#filename').validatebox({   
 	    required: false,   
 	}); 
@@ -167,9 +167,9 @@
 	    modal: true
 	});
 	
-	$('#add').click(function(){
+	/*$('#add').click(function(){
 		alert("aaa");
-	});
+	});*/
 });
 
 function numToString(rowData){
@@ -225,8 +225,8 @@ function abc(){
         contentType:"application/json",
         success: function (result) {
       	  //JSONObject json = JSONObject.fromObject(result);
-      	  alert("aaa");
+      	  alert(result);
         }
     }); 
-	alert("abc");
+	
 }
