@@ -13,6 +13,7 @@ import net.sf.json.JSONArray;
 
 import gov.lct.model.Trequire;
 import gov.lct.service.TrequireService;
+import gov.lct.model.Tevaluation;
 import gov.lct.model.Tpatentbasicinfo;
 import gov.lct.service.TevaluationService;
 import gov.lct.service.TpatentbasicinfoService;
@@ -23,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -698,8 +701,20 @@ public class ManageController {
 	@RequestMapping("/download")
 	public String download(HttpServletRequest request,
             HttpServletResponse response){
+		String loginname = null;
 		response.setCharacterEncoding("utf-8");
         response.setContentType("multipart/form-data");
+        try {
+			HttpSession session = request.getSession();	
+			loginname = session.getAttribute("loginname").toString();	
+			System.out.println(loginname);
+			if (loginname.equals(null)) {
+				return "unauth/error";
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			return "unauth/error";
+		}
         String fileName = request.getParameter("fileName");
         response.setHeader("Content-Disposition", "attachment;fileName="
                 + fileName);
@@ -707,7 +722,7 @@ public class ManageController {
            // String path = Thread.currentThread().getContextClassLoader()
            //         .getResource("").getPath()
            //         + "download";//这个download目录为啥建立在classes下的
-        	String path = "G:/";
+        	String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/" + loginname);
             InputStream inputStream = new FileInputStream(new File(path
                     + File.separator + fileName));
  
@@ -733,21 +748,23 @@ public class ManageController {
 		return "unauth/manage/download";
 	}
 	
+	/*
+	 * 发送邮件
+	 * author:chenming
+	 * */
 	@RequestMapping("sendEmail")
 	public void sendEmail(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String loginname = null;
 		try {
 			HttpSession session = request.getSession();	
-			//String realname = session.getAttribute("realname").toString();
 			loginname = session.getAttribute("loginname").toString();	
-			//System.out.println(realname);
 			System.out.println(loginname);
 			if (loginname.equals(null)) {
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		String email = request.getParameter("email");
+		String email = "cm8295@163.com";//request.getParameter("email");
 		String msg = null;
 		try {
 			msg=request.getParameter("msg");
@@ -759,19 +776,17 @@ public class ManageController {
 		mailSend mSend = new mailSend();
 		
 		if(msg==null){
-			msg = "尊敬的VRSIM用户，您好！\r\n\r\n\r\n\r\n"
-					+ "您在访问VRSIM时点击了“忘记密码”链接，这是一封密码重置确认邮件。\r\n\r\n"
-					+ "您可以通过点击以下链接重置帐户密码:\r\n\r\n"				
-					+ "http://210.75.239.228/rt/FindPwdServlet?id=" + loginname + "&pwd=" + "123456"
-					+ "\r\n"
-					+ "请复制上面链接地址到浏览器地址栏中打开以重置密码。"
-					+ "\r\n\r\n"
-					+ "为保障您的帐号安全，请在24小时内点击该链接，您也可以将链接复制到浏览器地址栏访问。 若如果您并未尝试修改密码，请忽略本邮件，由此给您带来的不便请谅解。\r\n\r\n\r\n"
-					+ "本邮件由系统自动发出，请勿直接回复！\r\n";
+			msg = "管理员，您好！\r\n\r\n\r\n\r\n"
+					+ "有新提交的资料需要你查看。\r\n\r\n"
+					+ loginname + ":\r\n\r\n";
 		}
 		 
-		mSend.sendMail(email, "VRSIM系统邮件", msg);
-		response.getWriter().append("1");   //1:发送成功
+		if (mSend.sendMail(email, "系统邮件", msg)) {
+			//response.getWriter().append("1");   //状态：1:发送成功
+		} else {
+			//response.getWriter().append("0");   //状态：0:发送失败
+
+		}
 		System.out.println("1"); 
 	}
 	
@@ -779,15 +794,76 @@ public class ManageController {
 	public void patentmanagement(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		List<Tupload> list = tuploadService.findAll(Tupload.class);
 		int len = tuploadService.getRows(Tupload.class);
+		String kkk = JSONUtil.listToJsonString(list, len);
+		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		response.getWriter().write(JSONUtil.listToJsonString(list, len));
-		//response.getWriter().write("123");
+		response.getWriter().write(kkk);
+	}
+	
+	//测试
+	@RequestMapping("/patentmanagement1")
+	public void patentmanagement1(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String kkks = request.getParameter("name");
+		List<Tupload> list = tuploadService.findAll(Tupload.class);
+		int len = tuploadService.getRows(Tupload.class);
+		String kkk = JSONUtil.listToJsonString(list, len);
+		PrintWriter out=null;
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		//response.getWriter().write(kkk);
+		//response.getWriter().write("{\"Area\"：[{\"AreaId\":\"123\"},{\"AreaId\":\"345\"}]}");
+		try {
+			out = response.getWriter();
+			out.write(kkk);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 	
 	//测试1,两个参数
 	@RequestMapping(value="/userupload1")
 	public String test(@RequestParam("param1") String param1,@RequestParam("param2") String param2,HttpServletRequest request){
 		return "unauth/manage/user-upload"; 
+	}
+	
+	/*
+	 * 成果转化应用评审结果
+	 * */
+	@RequestMapping(value="/evluation1")
+	public void evaluation1(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String loginname = null;
+		try {
+			HttpSession session = request.getSession();	
+			loginname = session.getAttribute("loginname").toString();	
+			if (loginname.equals(null)) {
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+		//获取符合条件的行数
+		ArrayList<String> fieldnameList=new ArrayList<String>();
+		ArrayList<String> valueList=new ArrayList<String>();
+		ArrayList<String> conditionList=new ArrayList<String>();
+		fieldnameList.add("expert");
+		fieldnameList.add("no");
+		valueList.add("expert1");
+		valueList.add("1");
+		conditionList.add("=");
+		conditionList.add("=");
+		int num = tevaluationService.getRows(Tevaluation.class, fieldnameList, valueList, conditionList);
+		List<Tevaluation> list = tevaluationService.queryItems(Tevaluation.class, fieldnameList, valueList, conditionList);
+		String kkk = JSONUtil.listToJsonString(list,num);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.getWriter().write(kkk);
+	}
+	
+	@RequestMapping(value="/toExpert")
+	public String toExpert(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		return "unauth/manage/expert";
 	}
 }
