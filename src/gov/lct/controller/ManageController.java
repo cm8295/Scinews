@@ -699,7 +699,7 @@ public class ManageController {
 	}
 	
 	@RequestMapping("/download")
-	public String download(HttpServletRequest request,
+	public void download(HttpServletRequest request,
             HttpServletResponse response){
 		String loginname = null;
 		response.setCharacterEncoding("utf-8");
@@ -709,11 +709,9 @@ public class ManageController {
 			loginname = session.getAttribute("loginname").toString();	
 			System.out.println(loginname);
 			if (loginname.equals(null)) {
-				return "unauth/error";
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-			return "unauth/error";
 		}
         String fileName = request.getParameter("fileName");
         response.setHeader("Content-Disposition", "attachment;fileName="
@@ -735,12 +733,13 @@ public class ManageController {
              // 这里主要关闭。
             os.close();
             inputStream.close();
+            //下载成功
+            response.getWriter().write(1);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-		return "unauth/manage/download";
 	}
 	
 	@RequestMapping("todownload")
