@@ -800,7 +800,7 @@ public class ManageController {
 		response.setContentType("application/json");
 		response.getWriter().write(kkk);
 	}
-	
+		
 	//测试
 	@RequestMapping("/patentmanagement1")
 	public void patentmanagement1(HttpServletRequest request, HttpServletResponse response) throws IOException{
