@@ -7,6 +7,6 @@
 <title>成功</title>
 </head>
 <body>
-    <a herf="http://localhost:8080/Scinews/manage/usermenu">上传成功跳转</a>
+    <a herf="http://localhost:8080/Scinews/manage/usermenu">上传成功跳转</a>     
 </body>
 </html>
