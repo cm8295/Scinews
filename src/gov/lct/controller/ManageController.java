@@ -865,4 +865,23 @@ public class ManageController {
 	public String toExpert(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		return "unauth/manage/expert";
 	}
+	
+	@RequestMapping(value="/getData")
+	public void getData(HttpServletRequest request, HttpServletResponse response){
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/text");
+			//response.setHeader("Cache-Control", "no-cache");
+			response.getWriter().write("{\"a\":\"bb\",\"a1\":\"bb1\",\"a2\":\"bb2\"}");
+			//response.getWriter().write("a");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="/togetData")
+	public String togetData(HttpServletRequest request, HttpServletResponse response){
+		return "unauth/manage/expert-left";
+	}
 }

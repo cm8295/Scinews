@@ -1,5 +1,5 @@
 ﻿$(function(){
-	alert("测试");
+	//alert("测试");
 	/*$("#add").click(function(){
 		alert("fff");
 		$.post("/Scinews/manage/patentmanagement1",
@@ -18,12 +18,11 @@
         data: "{\"a\":\"a\"}",
         type: "post",
         datatype:"json",
-        contentType:"application/json",
+        contentType:"application/x-www-form-urlencoded; charset=utf-8",
         success: function (data) {
         	mydata = data;
-          //$("#tt").val(data);
-      	  //alert(data);
-         console.log(mydata);
+      	    //alert(mydata);
+            console.log(mydata);
         }
     });
 	 /*$.getJSON("/Scinews/manage/patentmanagement", function(data) {
@@ -47,18 +46,18 @@
 		alert("aaa");
 	});*/
 });
-
-function abc(){
-	alert("aaa");
+var mydata=null;
+function getdata() {
 	$.ajax({
-        url: "/Scinews/manage/patentmanagement",
-        //data: "name=dfsdf",
+        url: "/Scinews/manage/getData",
         type: "post",
-        datatype:'json',
-        contentType:"application/json",
-        success: function (result) {
-      	  JSONObject json = JSONObject.fromObject(result);
-      	  alert(json.toString());
+        //datatype:"",
+        contentType:"application/x-www-form-urlencoded; charset=utf-8",
+        success: function (data) {
+        	var parsedJson = jQuery.parseJSON(data); 
+        	alert(parsedJson.a); 
+        	mydata=data.toString();
+      	   
         }
     });
 }
