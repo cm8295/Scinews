@@ -10,7 +10,7 @@ System.out.print(basePath);
 <base href="<%=basePath%>"/>
 <base target="main"/>
 <link rel="stylesheet" type="text/css" href="/css/adm.css" />
-<!-- <script type="text/javascript" src="/js/adm.js" language="javascript"></script> -->
+<script type="text/javascript" src="/js/adm.js" language="javascript"></script>
 <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <script type="text/javascript">

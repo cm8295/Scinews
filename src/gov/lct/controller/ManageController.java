@@ -793,11 +793,11 @@ public class ManageController {
 	public void patentmanagement(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		List<Tupload> list = tuploadService.findAll(Tupload.class);
 		int len = tuploadService.getRows(Tupload.class);
-		String kkk = JSONUtil.listToJsonString(list, len);
+		String jsonStr = JSONUtil.listToJsonString(list, len);
 		
 		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		response.getWriter().write("{\"a\":\"b\"}");
+		response.setContentType("application/text");
+		response.getWriter().write(jsonStr);
 	}
 		
 	//测试

@@ -106,6 +106,17 @@ public class Tupload {
 	
 	@Column(name="suggestion")
 	private String suggestion;
+	
+	@Column(name="expert")
+	private String expert;
+
+	public String getExpert() {
+		return expert;
+	}
+
+	public void setExpert(String expert) {
+		this.expert = expert;
+	}
 
 	public String getSuggestion() {
 		return suggestion;

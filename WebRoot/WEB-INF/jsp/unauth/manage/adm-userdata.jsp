@@ -22,11 +22,8 @@ String basePath_content = request.getScheme()+"://"+request.getServerName()+":"+
     <div id="content">
   		<table id="patient_list"></table>
   	</div>
-  	<div>
-  	    <input type="text" id="tt" name="tt" class="tt" value=<%=path_content %>>
-  	</div>
          <div>
-  <table width="613" border="0" cellpadding="2" cellspacing="1" id="SignFrame">
+<!--    <table width="613" border="0" cellpadding="2" cellspacing="1" id="SignFrame">
               <tr id="trHeader">
                 <td width="27" bgcolor="#96E0E2">序号</td>
                 <td width="64" bgcolor="#96E0E2">用户姓名</td>
@@ -36,13 +33,12 @@ String basePath_content = request.getScheme()+"://"+request.getServerName()+":"+
                 <td width="153" bgcolor="#96E0E2">意见</td>
                 <td width="57" align="center" bgcolor="#96E0E2">&nbsp;</td>
               </tr>
-        </table>
+        </table> -->
    </div>
    <div>
-        <input type="button" name="Submit" value="添加参与人" onclick="AddSignRow()" />
-     <input type="button" name="Submit2" value="清空" onclick="ClearAllSign()" />
-     <input name='txtTRLastIndex' type='hidden' id='txtTRLastIndex' value="1" />
-     <a href="/Scinews/manage/patentmanagement">数据请求</a>
+      <table width="613" border="0" cellpadding="2" cellspacing="1" id="data"></table>
+   </div>
+   <div>
      <input type="button" id="add" class="add" name="add" value="获取值" onclick="abc()">
      <a href="/Scinews/manage/sendEmail">发送邮件</a>
    </div>
