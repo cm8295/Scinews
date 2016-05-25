@@ -324,7 +324,7 @@ public class ManageController {
 		return "unauth/manage/patentmanage";
 	}
 	
-		
+	
 	@RequestMapping(value="/patentnorecommendsave")
 	public String Patentnorecommendsave(HttpServletRequest request) throws Exception {
 			
