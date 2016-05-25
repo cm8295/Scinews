@@ -1,10 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" import="net.sf.json.JSONObject" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
     
 <%
 String path_content = request.getContextPath();
 String basePath_content = request.getScheme()+"://"+request.getServerName()+":"+
 		request.getServerPort()+path_content+"/";
+
+JSONObject jsonData = (JSONObject)request.getAttribute("jsonData");
+
 %>
 <html>
 <head>
@@ -16,6 +19,7 @@ String basePath_content = request.getScheme()+"://"+request.getServerName()+":"+
 </head>
 <body>
     <a href="/Scinews/manage/getData">数据请求</a>
+    <input type ="text" value=<%=jsonData %>>
     <input type="button" id="bt1" value="获取值" onclick="getdata()"/>
 </body>
 </html>

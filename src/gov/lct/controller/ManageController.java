@@ -10,7 +10,7 @@ import gov.lct.service.TuploadService;
 import gov.lct.service.TuserService;
 import gov.lct.util.StringProcess;
 import net.sf.json.JSONArray;
-
+import net.sf.json.JSONObject;
 import gov.lct.model.Trequire;
 import gov.lct.service.TrequireService;
 import gov.lct.model.Tevaluation;
@@ -867,17 +867,24 @@ public class ManageController {
 	}
 	
 	@RequestMapping(value="/getData")
-	public void getData(HttpServletRequest request, HttpServletResponse response){
-		try {
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/text");
-			//response.setHeader("Cache-Control", "no-cache");
-			response.getWriter().write("{\"a\":\"bb\",\"a1\":\"bb1\",\"a2\":\"bb2\"}");
-			//response.getWriter().write("a");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String getData(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		//获取符合条件的行数
+		ArrayList<String> fieldnameList=new ArrayList<String>();
+		ArrayList<String> valueList=new ArrayList<String>();
+		ArrayList<String> conditionList=new ArrayList<String>();
+		fieldnameList.add("expert");
+		fieldnameList.add("no");
+		valueList.add("expert1");
+		valueList.add("1");
+		conditionList.add("=");
+		conditionList.add("=");
+		int num = tevaluationService.getRows(Tevaluation.class, fieldnameList, valueList, conditionList);
+		List<Tevaluation> list = tevaluationService.queryItems(Tevaluation.class, fieldnameList, valueList, conditionList);
+		String kkk = JSONUtil.listToJsonString(list,num);
+		JSONObject jsonData = JSONObject.fromObject(kkk);
+		request.setAttribute("jsonData", jsonData);
+		return "unauth/manage/expert-left";
+
 	}
 	
 	@RequestMapping(value="/togetData")
