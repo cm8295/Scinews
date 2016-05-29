@@ -38,7 +38,7 @@ public class JSONUtil {
 			sb.append("\"file12\":\""+tupload.getFile12()+"\",");
 			sb.append("\"file13\":\""+tupload.getFile13()+"\",");
 			sb.append("\"file14\":\""+tupload.getFile14()+"\",");
-			sb.append("\"suggestion\":\""+tupload.getSuggestion()+"\",");
+			//sb.append("\"suggestion\":\""+tupload.getSuggestion()+"\",");
 			sb.append("\"loginname\":\""+tupload.getLoginname()+"\"}");
 			if(i<len-1){
 				sb.append(",");

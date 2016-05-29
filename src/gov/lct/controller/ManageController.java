@@ -33,6 +33,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+
+
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,6 +48,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
 
 import gov.lct.util.*;
 import com.hp.hpl.jena.n3.RelativeURIException;
@@ -98,6 +101,16 @@ public class ManageController {
 	@RequestMapping(value="/left")
 	public String Left(HttpServletRequest request) throws Exception {	
         return "unauth/manage/adm-left-menu";
+	}
+	
+	@RequestMapping(value="/expertleft")
+	public String ExpertLeft(HttpServletRequest request) throws Exception {	
+        return "unauth/manage/expert-left";
+	}
+	
+	@RequestMapping(value="/expert1")
+	public String Expert1(HttpServletRequest request) throws Exception {	
+        return "unauth/manage/expert1";
 	}
 	
 	@RequestMapping(value="/top")
@@ -414,22 +427,7 @@ public class ManageController {
 				 request.setAttribute("file12", StringProcess.getString(upload.getFile12()));
 				 request.setAttribute("file13", StringProcess.getString(upload.getFile13()));
 				 request.setAttribute("file14", StringProcess.getString(upload.getFile14()));
-				 request.setAttribute("state1", StringProcess.getString(upload.getState1()));
-				 request.setAttribute("state2", StringProcess.getString(upload.getState2()));
-				 request.setAttribute("state3", StringProcess.getString(upload.getState3()));
-				 request.setAttribute("state4", StringProcess.getString(upload.getState4()));
-				 request.setAttribute("state5", StringProcess.getString(upload.getState5()));
-				 request.setAttribute("state6", StringProcess.getString(upload.getState6()));
-				 request.setAttribute("state7", StringProcess.getString(upload.getState7()));
-				 request.setAttribute("state8", StringProcess.getString(upload.getState8()));
-				 request.setAttribute("state9", StringProcess.getString(upload.getState9()));
-				 request.setAttribute("state10", StringProcess.getString(upload.getState10()));
-				 request.setAttribute("state11", StringProcess.getString(upload.getState11()));
-				 request.setAttribute("state12", StringProcess.getString(upload.getState12()));
-				 request.setAttribute("state13", StringProcess.getString(upload.getState13()));
-				 request.setAttribute("state14", StringProcess.getString(upload.getState14()));
 				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
-				 request.setAttribute("suggestion", StringProcess.getString(upload.getSuggestion()));
 			}
 		}else{
 			request.setAttribute("file1", "");
@@ -461,7 +459,6 @@ public class ManageController {
 			 request.setAttribute("state13", "");
 			 request.setAttribute("state14", "");
 			 request.setAttribute("uploadtime", "");
-			 request.setAttribute("suggestion", "");
 		}
 		
 		
@@ -542,59 +539,45 @@ public class ManageController {
                 switch (file.getName()) {
 				case "file1":
 					tupload.setFile1(file.getOriginalFilename());
-					tupload.setState1("待审核");
 					break;
 				case "file2":
 					tupload.setFile2(file.getOriginalFilename());
-					tupload.setState2("待审核");
 					break;
 				case "file3":
 					tupload.setFile3(file.getOriginalFilename());
-					tupload.setState3("待审核");
 					break;
 				case "file4":
 					tupload.setFile4(file.getOriginalFilename());
-					tupload.setState4("待审核");
 					break;
 				case "file5":
 					tupload.setFile5(file.getOriginalFilename());
-					tupload.setState5("待审核");
 					break;
 				case "file6":
 					tupload.setFile6(file.getOriginalFilename());
-					tupload.setState6("待审核");
 					break;
 				case "file7":
 					tupload.setFile7(file.getOriginalFilename());
-					tupload.setState7("待审核");
 					break;
 				case "file8":
 					tupload.setFile8(file.getOriginalFilename());
-					tupload.setState8("待审核");
 					break;
 				case "file9":
 					tupload.setFile9(file.getOriginalFilename());
-					tupload.setState9("待审核");
 					break;
 				case "file10":
 					tupload.setFile10(file.getOriginalFilename());
-					tupload.setState10("待审核");
 					break;
 				case "file11":
 					tupload.setFile11(file.getOriginalFilename());
-					tupload.setState11("待审核");
 					break;
 				case "file12":
 					tupload.setFile12(file.getOriginalFilename());
-					tupload.setState12("待审核");
 					break;
 				case "file13":
 					tupload.setFile13(file.getOriginalFilename());
-					tupload.setState13("待审核");
 					break;
 				case "file14":
 					tupload.setFile14(file.getOriginalFilename());
-					tupload.setState14("待审核");
 					break;
 				default:
 					break;
@@ -639,22 +622,7 @@ public class ManageController {
 				 request.setAttribute("file12", StringProcess.getString(upload.getFile12()));
 				 request.setAttribute("file13", StringProcess.getString(upload.getFile13()));
 				 request.setAttribute("file14", StringProcess.getString(upload.getFile14()));
-				 request.setAttribute("state1", StringProcess.getString(upload.getState1()));
-				 request.setAttribute("state2", StringProcess.getString(upload.getState2()));
-				 request.setAttribute("state3", StringProcess.getString(upload.getState3()));
-				 request.setAttribute("state4", StringProcess.getString(upload.getState4()));
-				 request.setAttribute("state5", StringProcess.getString(upload.getState5()));
-				 request.setAttribute("state6", StringProcess.getString(upload.getState6()));
-				 request.setAttribute("state7", StringProcess.getString(upload.getState7()));
-				 request.setAttribute("state8", StringProcess.getString(upload.getState8()));
-				 request.setAttribute("state9", StringProcess.getString(upload.getState9()));
-				 request.setAttribute("state10", StringProcess.getString(upload.getState10()));
-				 request.setAttribute("state11", StringProcess.getString(upload.getState11()));
-				 request.setAttribute("state12", StringProcess.getString(upload.getState12()));
-				 request.setAttribute("state13", StringProcess.getString(upload.getState13()));
-				 request.setAttribute("state14", StringProcess.getString(upload.getState14()));
 				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
-				 request.setAttribute("suggestion", StringProcess.getString(upload.getSuggestion()));
 			}
 		}else{
 			request.setAttribute("file1", "");
@@ -686,7 +654,7 @@ public class ManageController {
 			 request.setAttribute("state13", "");
 			 request.setAttribute("state14", "");
 			 request.setAttribute("uploadtime", "");
-			 request.setAttribute("suggestion", "");
+			 //request.setAttribute("suggestion", "");
 		}
 		
         return "unauth/manage/user-upload";
@@ -789,6 +757,9 @@ public class ManageController {
 		System.out.println("1"); 
 	}
 	
+	/*
+	 * 获取评审文件
+	 * */
 	@RequestMapping("/patentmanagement")
 	public void patentmanagement(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		List<Tupload> list = tuploadService.findAll(Tupload.class);
@@ -798,6 +769,33 @@ public class ManageController {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/text");
 		response.getWriter().write(jsonStr);
+	}
+	
+	/*
+	 * 成果转化应用评审任务
+	 * 
+	 * */
+	@RequestMapping("/expert2")
+	public String cgzhyyTask(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		//获取符合条件的行数
+		ArrayList<String> fieldnameList=new ArrayList<String>();
+		ArrayList<String> valueList=new ArrayList<String>();
+		ArrayList<String> conditionList=new ArrayList<String>();
+		fieldnameList.add("expert");
+		fieldnameList.add("no");
+		fieldnameList.add("state");
+		valueList.add("expert2");
+		valueList.add("1");
+		valueList.add("0");
+		conditionList.add("=");
+		conditionList.add("=");
+		conditionList.add("=");
+		int num = tevaluationService.getRows(Tevaluation.class, fieldnameList, valueList, conditionList);
+		List<Tevaluation> list = tevaluationService.queryItems(Tevaluation.class, fieldnameList, valueList, conditionList);
+		String kkk = JSONUtil.listToJsonString(list,num);
+		JSONObject jsonData = JSONObject.fromObject(kkk);
+		request.setAttribute("jsonData", jsonData);
+		return "unauth/manage/expert2";
 	}
 		
 	//测试
@@ -841,8 +839,6 @@ public class ManageController {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
-		
 		//获取符合条件的行数
 		ArrayList<String> fieldnameList=new ArrayList<String>();
 		ArrayList<String> valueList=new ArrayList<String>();
@@ -857,7 +853,7 @@ public class ManageController {
 		List<Tevaluation> list = tevaluationService.queryItems(Tevaluation.class, fieldnameList, valueList, conditionList);
 		String kkk = JSONUtil.listToJsonString(list,num);
 		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
+		response.setContentType("application/text");
 		response.getWriter().write(kkk);
 	}
 	
