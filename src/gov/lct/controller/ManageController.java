@@ -639,20 +639,6 @@ public class ManageController {
 			 request.setAttribute("file12", "");
 			 request.setAttribute("file13", "");
 			 request.setAttribute("file14", "");
-			 request.setAttribute("state1", "");
-			 request.setAttribute("state2", "");
-			 request.setAttribute("state3", "");
-			 request.setAttribute("state4", "");
-			 request.setAttribute("state5", "");
-			 request.setAttribute("state6", "");
-			 request.setAttribute("state7", "");
-			 request.setAttribute("state8", "");
-			 request.setAttribute("state9", "");
-			 request.setAttribute("state10", "");
-			 request.setAttribute("state11", "");
-			 request.setAttribute("state12", "");
-			 request.setAttribute("state13", "");
-			 request.setAttribute("state14", "");
 			 request.setAttribute("uploadtime", "");
 			 //request.setAttribute("suggestion", "");
 		}

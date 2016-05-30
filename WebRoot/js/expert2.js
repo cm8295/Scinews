@@ -1,7 +1,6 @@
 //初始化
 $(function(){
 	var dataObj = eval("(" + $("#aab").val() + ")");
-	//var dataObj=eval("("+data+")");//转换为json对象 
 	var len = dataObj.rows.length;
 	$('#data').append('<tr>' +
 			'<td width="50" bgcolor="#96E0E2">'+'序号'+'</td>'+
@@ -35,7 +34,7 @@ $(function(){
 		$('#data').append('<tr>' +
     			'<td>'+ i +'</td>'+
     			'<td>'+dataObj.rows[i - 1].user+'</td>'+
-    			'<td><input type="text" name="item1"/></td>'+
+    			'<td>'+'<input type="text" name="item1"/>'+'</td>'+
     			'<td><input type="text" name="item2"/></td>'+
     			'<td><input type="text" name="item3"/></td>'+
     			'<td><input type="text" name="item4"/></td>'+
@@ -58,7 +57,7 @@ $(function(){
     			'<td><input type="text" name="item21"/></td>'+
     			'<td><input type="text" name="suggestion"/></td>'+
     			'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改</button>'
-    			+ '<button>下载</button>' + '<button id="bt' + i + '" onclick="submitData(this)">提交</button>' +'</td>'+
+    			+ '<button>下载</button>' + '<button id="bt1' + i + '" onclick="submitData1(this)">提交</button>' +'</td>'+
     			'</tr>')
 	}
 	/*$.ajax({
@@ -77,9 +76,9 @@ $(function(){
 });
 
 function select(elementId) {
-    /*alert("user：" + elementId.parentNode.parentNode.children[0].value +
+    alert("user：" + elementId.parentNode.parentNode.children[0].innerHTML +
     		"us：" + elementId.parentNode.parentNode.children[2].innerHTML +
-       "值：" + elementId.parentNode.parentNode.children[1].innerHTML);*/
+       "值：" + elementId.parentNode.parentNode.children[1].innerHTML);
 /*var oTable=document.getElementById('data');
     
     for(var i=0;i<oTable.tBodies[0].rows.length;i++)
@@ -105,7 +104,7 @@ function select(elementId) {
         }
     };     */
 	$('table input').each(function(){
-	    alert($(this).val());
+	    //alert($(this).val());
 	});
 }
 
@@ -118,7 +117,7 @@ function testss(){
 }
 
 function submitData(elementId){
-	var str = '{'+
+	/*var str = '{'+
 	'"user":"' + elementId.parentNode.parentNode.children[1].innerHTML + '"'
 	'"item1":"' + elementId.parentNode.parentNode.children[2].innerHTML + '"'
 	'"item2":"' + elementId.parentNode.parentNode.children[3].innerHTML + '"'
@@ -152,5 +151,36 @@ function submitData(elementId){
         success: function (data) {
         	alert(data);
         }
+    });*/
+}
+
+function submitData1(elementId){
+	/*var Container = document.getElementById("data");
+	var rowdata='';
+	  // 获取数据
+	  for (var i = 0; i < Container.rows.length; i++)//遍历表格
+	  {
+	    	      for (j = 0; j < Container.rows.item(0).cells.length-1; j++)
+	      {
+	           rowdata+=Container.rows.item(0).cells.item(j).childNodes[0].value+',';//得到每行的数据
+	           
+	          }
+	    	      alert(rowdata);
+	          	  }*/
+	/*var tableArr = []; //存所有数据
+    $("table tr:not(:first)").each(function(){ //便利除标题行外所有行
+        var trArr = []; //存行数据
+        trArr.push(elementId.parentNode.parentNode.children[1].innerHTML);
+        $("input,select",this).each(function(){ //便利行内的input select的值
+            trArr.push($(this).val());
+            alert($(this).val());
+        });
+        tableArr.push(trArr.join()); //行数据格式
     });
+    var value = tableArr.join(";"); //向后台传入的值，行与行之间“;”隔开
+    $.post("/Scinews/manage/expert2",{value:value},function(data){
+        //回调函数
+    });*/
+	//alert($('table input:eq(0)').val());
+	alert(elementId.cells[0].childNodes[0].value); 
 }

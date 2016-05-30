@@ -53,8 +53,12 @@ JSONObject jsonData = (JSONObject)request.getAttribute("jsonData");
     </form> --%>
     <%-- <input type="button" onclick="buttonsss()" value="<%=jsonData%>" id="ipd"/> --%>
     <input type="hidden" id="aab" value=<%=jsonData %> >
+    <input type="text" id="tt" value="nihao">
+    <form action="/Scinews/manage/expert2" method="post">
     <div>
             <table border="0" cellpadding="2" cellspacing="1" id="data" style="table-layout:fixed;"></table>
     </div>
+    <input type="submit" value="提交"/>
+    </form>
 </body>
 </html>
