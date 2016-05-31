@@ -181,6 +181,10 @@ function submitData1(elementId){
     $.post("/Scinews/manage/expert2",{value:value},function(data){
         //回调函数
     });*/
-	//alert($('table input:eq(0)').val());
-	alert(elementId.cells[0].childNodes[0].value); 
+	//alert($('table input:eq(1)').val());
+	for (var i = 0; i < 21; i++){
+		alert($('table input:eq(i)').val());
+	}
+	
+	
 }
