@@ -3,8 +3,8 @@ $(function(){
 	var dataObj = eval("(" + $("#aab").val() + ")");
 	var len = dataObj.rows.length;
 	$('#data').append('<tr>' +
-			'<td width="50" bgcolor="#96E0E2">'+'序号'+'</td>'+
-			'<td bgcolor="#96E0E2">'+'用户姓名'+'</td>'+
+			'<td bgcolor="#96E0E2">'+'序号'+'</td>'+
+			'<td bgcolor="#96E0E2">'+'姓名'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'创造性'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'先进性'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'技术难度和复杂度'+'</td>'+
@@ -34,51 +34,60 @@ $(function(){
 		$('#data').append('<tr>' +
     			'<td>'+ i +'</td>'+
     			'<td>'+dataObj.rows[i - 1].user+'</td>'+
-    			'<td>'+'<input type="text" name="item1"/>'+'</td>'+
-    			'<td><input type="text" name="item2"/></td>'+
-    			'<td><input type="text" name="item3"/></td>'+
-    			'<td><input type="text" name="item4"/></td>'+
-    			'<td><input type="text" name="item5"/></td>'+
-    			'<td><input type="text" name="item6"/></td>'+
-    			'<td><input type="text" name="item7"/></td>'+
-    			'<td><input type="text" name="item8"/></td>'+
-    			'<td><input type="text" name="item9"/></td>'+
-    			'<td><input type="text" name="item10"/></td>'+
-    			'<td><input type="text" name="item11"/></td>'+
-    			'<td><input type="text" name="item12"/></td>'+
-    			'<td><input type="text" name="item13"/></td>'+
-    			'<td><input type="text" name="item14"/></td>'+
-    			'<td><input type="text" name="item15"/></td>'+
-    			'<td><input type="text" name="item16"/></td>'+
-    			'<td><input type="text" name="item17"/></td>'+
-    			'<td><input type="text" name="item18"/></td>'+
-    			'<td><input type="text" name="item19"/></td>'+
-    			'<td><input type="text" name="item20"/></td>'+
-    			'<td><input type="text" name="item21"/></td>'+
-    			'<td><input type="text" name="suggestion"/></td>'+
-    			'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改</button>'
-    			+ '<button>下载</button>' + '<button id="bt1' + i + '" onclick="submitData1(this)">提交</button>' +'</td>'+
+    			'<td id="tt1">'+dataObj.rows[i - 1].item1+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item2+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item3+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item4+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item5+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item6+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item7+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item8+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item9+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item10+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item11+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item12+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item13+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item14+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item15+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item16+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item17+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item18+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item19+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item20+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item21+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].suggestion+'</td>'+
+    			'<td>'
+                + '<input type="button" id="btbj" value="编辑">'
+                //+ '<input type="button" id="bt' + i + '" onclick="select(this)" value="修改"></input>'
+    			+ '<input type="button" id="btxz" value="下载"></input>' 
+    			+ '<input type="button" id="bt1' + i + '" onclick="submitData(this)" value="提交"></input>' 
+    			+'</td>'+
     			'</tr>')
 	}
-	/*$.ajax({
-        url: "/Scinews/manage/expert2",
-        type: "post",
-        contentType:"application/json",
-        success: function (data) {
-        	
-        }
-    });
-	$("table td").click(function() {
+	
+	/*$("table td").click(function() {
         var row = $(this).parent().index() + 1; // 行位置
         var col = $(this).index() + 1; // 列位置
         alert("当前位置：第"+row+"行，第"+col+"列")
     });*/
+	$("#btbj").click(function() {
+	        str = $(this).val()=="编辑"?"确定":"编辑";  
+	        $(this).val(str);   // 按钮被点击后，在“编辑”和“确定”之间切换
+	        $(this).parent().siblings("#tt1").each(function() {  // 获取当前行的其他单元格
+	            obj_text = $(this).find("input:text");    // 判断单元格下是否有文本框
+	            if(!obj_text.length)   // 如果没有文本框，则添加文本框使之可以编辑
+	                $(this).html("<input type='text' value='"+$(this).text()+"'>");
+	            else   // 如果已经存在文本框，则将其显示为文本框修改的值
+	                $(this).html(obj_text.val()); 
+	        });
+	    });
 });
 
 function select(elementId) {
-    alert("user：" + elementId.parentNode.parentNode.children[0].innerHTML +
+	alert("sdf");
+    /*alert("user：" + elementId.parentNode.parentNode.children[0].innerHTML +
     		"us：" + elementId.parentNode.parentNode.children[2].innerHTML +
-       "值：" + elementId.parentNode.parentNode.children[1].innerHTML);
+       "值：" + elementId.parentNode.parentNode.children[1].innerHTML);*/
 /*var oTable=document.getElementById('data');
     
     for(var i=0;i<oTable.tBodies[0].rows.length;i++)
@@ -103,9 +112,6 @@ function select(elementId) {
             oTable.tBodies[0].rows[i].style.background='';    
         }
     };     */
-	$('table input').each(function(){
-	    //alert($(this).val());
-	});
 }
 
 function buttonsss() {
@@ -116,45 +122,8 @@ function testss(){
 	alert("testss");
 }
 
-function submitData(elementId){
-	/*var str = '{'+
-	'"user":"' + elementId.parentNode.parentNode.children[1].innerHTML + '"'
-	'"item1":"' + elementId.parentNode.parentNode.children[2].innerHTML + '"'
-	'"item2":"' + elementId.parentNode.parentNode.children[3].innerHTML + '"'
-	'"item3":"' + elementId.parentNode.parentNode.children[4].innerHTML + '"'
-	'"item4":"' + elementId.parentNode.parentNode.children[5].innerHTML + '"'
-	'"item5":"' + elementId.parentNode.parentNode.children[6].innerHTML + '"'
-	'"item6":"' + elementId.parentNode.parentNode.children[7].innerHTML + '"'
-	'"item7":"' + elementId.parentNode.parentNode.children[8].innerHTML + '"'
-	'"item8":"' + elementId.parentNode.parentNode.children[9].innerHTML + '"'
-	'"item9":"' + elementId.parentNode.parentNode.children[10].innerHTML + '"'
-	'"item10":"' + elementId.parentNode.parentNode.children[11].innerHTML + '"'
-	'"item11":"' + elementId.parentNode.parentNode.children[12].innerHTML + '"'
-	'"item12":"' + elementId.parentNode.parentNode.children[13].innerHTML + '"'
-	'"item13":"' + elementId.parentNode.parentNode.children[14].innerHTML + '"'
-	'"item14":"' + elementId.parentNode.parentNode.children[15].innerHTML + '"'
-	'"item15":"' + elementId.parentNode.parentNode.children[16].innerHTML + '"'
-	'"item16":"' + elementId.parentNode.parentNode.children[17].innerHTML + '"'
-	'"item17":"' + elementId.parentNode.parentNode.children[18].innerHTML + '"'
-	'"item18":"' + elementId.parentNode.parentNode.children[19].innerHTML + '"'
-	'"item19":"' + elementId.parentNode.parentNode.children[20].innerHTML + '"'
-	'"item20":"' + elementId.parentNode.parentNode.children[21].innerHTML + '"'
-	'"item21":"' + elementId.parentNode.parentNode.children[22].innerHTML + '"'
-	'"suggestion":"' + elementId.parentNode.parentNode.children[23].innerHTML + '"'
-	'}'
-	var jsonObj =  jQuery.parseJSON(str);
-	$.ajax({
-        url: "/Scinews/manage/expert2",
-        data: jsonObj,
-        type: "post",
-        contentType:"application/json",
-        success: function (data) {
-        	alert(data);
-        }
-    });*/
-}
 
-function submitData1(elementId){
+function submitData(elementId){
 	/*var Container = document.getElementById("data");
 	var rowdata='';
 	  // 获取数据
@@ -182,9 +151,55 @@ function submitData1(elementId){
         //回调函数
     });*/
 	//alert($('table input:eq(1)').val());
-	for (var i = 0; i < 21; i++){
+	/*for (var i = 0; i < 21; i++){
 		alert($('table input:eq(i)').val());
-	}
-	
+	}*/
+	var table = document.getElementById("data");
+	var colums = table.rows[0].cells.length;
+	//组装json
+	var jsonT = "{\"rows\":[{";
+	//for (var i = 0; i < colums; i++) {
+		jsonT += "\"user\":\"" + elementId.parentNode.parentNode.children[1].innerHTML + "\"," 
+		+ "\"item1\":\"" + elementId.parentNode.parentNode.children[2].innerHTML + "\","
+		+ "\"item2\":\"" + elementId.parentNode.parentNode.children[3].innerHTML + "\","
+		+ "\"item3\":\"" + elementId.parentNode.parentNode.children[4].innerHTML + "\","
+		+ "\"item4\":\"" + elementId.parentNode.parentNode.children[5].innerHTML + "\","
+		+ "\"item5\":\"" + elementId.parentNode.parentNode.children[6].innerHTML + "\","
+		+ "\"item6\":\"" + elementId.parentNode.parentNode.children[7].innerHTML + "\","
+		+ "\"item7\":\"" + elementId.parentNode.parentNode.children[8].innerHTML + "\","
+		+ "\"item8\":\"" + elementId.parentNode.parentNode.children[9].innerHTML + "\","
+		+ "\"item9\":\"" + elementId.parentNode.parentNode.children[10].innerHTML + "\","
+		+ "\"item10\":\"" + elementId.parentNode.parentNode.children[11].innerHTML + "\","
+		+ "\"item11\":\"" + elementId.parentNode.parentNode.children[12].innerHTML + "\","
+		+ "\"item12\":\"" + elementId.parentNode.parentNode.children[13].innerHTML + "\","
+		+ "\"item13\":\"" + elementId.parentNode.parentNode.children[14].innerHTML + "\","
+		+ "\"item14\":\"" + elementId.parentNode.parentNode.children[15].innerHTML + "\","
+		+ "\"item15\":\"" + elementId.parentNode.parentNode.children[16].innerHTML + "\","
+		+ "\"item16\":\"" + elementId.parentNode.parentNode.children[17].innerHTML + "\","
+		+ "\"item17\":\"" + elementId.parentNode.parentNode.children[18].innerHTML + "\","
+		+ "\"item18\":\"" + elementId.parentNode.parentNode.children[19].innerHTML + "\","
+		+ "\"item19\":\"" + elementId.parentNode.parentNode.children[20].innerHTML + "\","
+		+ "\"item20\":\"" + elementId.parentNode.parentNode.children[21].innerHTML + "\","
+		+ "\"item21\":\"" + elementId.parentNode.parentNode.children[22].innerHTML + "\","
+		+ "\"item22\":\"" + elementId.parentNode.parentNode.children[23].innerHTML + "\","
+		+ "\"suggestion\":\"" + elementId.parentNode.parentNode.children[23].innerHTML + "\"";
+	//}
+	jsonT += "}]}";
+	console.log(jsonT);
+	$.ajax({
+        url: "/Scinews/manage/subTask",
+        data:{"jsonT":jsonT,"no":1},
+        type: "post",
+        datatype:"json",
+        contentType:"application/x-www-form-urlencoded; charset=utf-8",
+        success: function (data) {
+            console.log(data);
+            alert(data);
+        }
+    });
+	//alert(jsonT);
+	/*alert("user：" + elementId.parentNode.parentNode.children[0].innerHTML +
+    		"us：" + elementId.parentNode.parentNode.children[1].innerHTML +
+       "值：" + elementId.parentNode.parentNode.children[2].innerHTML);*/
 	
 }

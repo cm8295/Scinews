@@ -43,6 +43,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,6 +54,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import gov.lct.util.*;
 import com.hp.hpl.jena.n3.RelativeURIException;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.sparql.core.Var;
 import com.hp.hpl.jena.sparql.util.Convert;
 
 
@@ -333,7 +335,6 @@ public class ManageController {
 		      request.setAttribute("availableItems", availableItems); 
 		  }
 		}	    
-		
 		return "unauth/manage/patentmanage";
 	}
 	
@@ -444,20 +445,6 @@ public class ManageController {
 			 request.setAttribute("file12", "");
 			 request.setAttribute("file13", "");
 			 request.setAttribute("file14", "");
-			 request.setAttribute("state1", "");
-			 request.setAttribute("state2", "");
-			 request.setAttribute("state3", "");
-			 request.setAttribute("state4", "");
-			 request.setAttribute("state5", "");
-			 request.setAttribute("state6", "");
-			 request.setAttribute("state7", "");
-			 request.setAttribute("state8", "");
-			 request.setAttribute("state9", "");
-			 request.setAttribute("state10", "");
-			 request.setAttribute("state11", "");
-			 request.setAttribute("state12", "");
-			 request.setAttribute("state13", "");
-			 request.setAttribute("state14", "");
 			 request.setAttribute("uploadtime", "");
 		}
 		
@@ -763,6 +750,16 @@ public class ManageController {
 	 * */
 	@RequestMapping("/expert2")
 	public String cgzhyyTask(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String loginname = null;
+		try {
+			HttpSession session = request.getSession();	
+			loginname = session.getAttribute("loginname").toString();	
+			System.out.println(loginname);
+			if (loginname.equals(null)) {
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		//获取符合条件的行数
 		ArrayList<String> fieldnameList=new ArrayList<String>();
 		ArrayList<String> valueList=new ArrayList<String>();
@@ -770,7 +767,7 @@ public class ManageController {
 		fieldnameList.add("expert");
 		fieldnameList.add("no");
 		fieldnameList.add("state");
-		valueList.add("expert2");
+		valueList.add(loginname);
 		valueList.add("1");
 		valueList.add("0");
 		conditionList.add("=");
@@ -782,6 +779,113 @@ public class ManageController {
 		JSONObject jsonData = JSONObject.fromObject(kkk);
 		request.setAttribute("jsonData", jsonData);
 		return "unauth/manage/expert2";
+	}
+	
+	/*
+	 * 提交任务
+	 * 
+	 * */
+	@RequestMapping("/subTask")
+	public void subTask(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String loginname = null;
+		try {
+			HttpSession session = request.getSession();	
+			loginname = session.getAttribute("loginname").toString();	
+			System.out.println(loginname);
+			if (loginname.equals(null)) {
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		Date now = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String jsonT = request.getParameter("jsonT");
+		String no = request.getParameter("no");
+		JSONObject jb = JSONObject.fromObject(jsonT);
+	    JSONArray ja = jb.getJSONArray("rows");
+	    Tevaluation tevaluation = new Tevaluation();
+	    //System.out.println(Integer.valueOf(ja.getJSONObject(0).size()));
+	    tevaluation.setUser(ja.getJSONObject(0).getString("user"));
+	    //System.out.println(ja.getJSONObject(0).getString("item1"));
+	    //tevaluation.setItem1(Integer.valueOf(ja.getJSONObject(0).getString("item1")).intValue());
+	    if (!"".equals(ja.getJSONObject(0).getString("item1"))) {
+	    	tevaluation.setItem1(ja.getJSONObject(0).getInt("item1"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item1"))) {
+			tevaluation.setItem1(ja.getJSONObject(0).getInt("item1"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item2"))) {
+			tevaluation.setItem2(ja.getJSONObject(0).getInt("item2"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item3"))) {
+			tevaluation.setItem3(ja.getJSONObject(0).getInt("item3"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item4"))) {
+			tevaluation.setItem4(ja.getJSONObject(0).getInt("item4"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item5"))) {
+			tevaluation.setItem5(ja.getJSONObject(0).getInt("item5"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item6"))) {
+			tevaluation.setItem6(ja.getJSONObject(0).getInt("item6"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item7"))) {
+			tevaluation.setItem7(ja.getJSONObject(0).getInt("item7"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item8"))) {
+			tevaluation.setItem8(ja.getJSONObject(0).getInt("item8"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item9"))) {
+			tevaluation.setItem9(ja.getJSONObject(0).getInt("item9"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item10"))) {
+			tevaluation.setItem10(ja.getJSONObject(0).getInt("item10"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item11"))) {
+			tevaluation.setItem11(ja.getJSONObject(0).getInt("item11"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item12"))) {
+			tevaluation.setItem12(ja.getJSONObject(0).getInt("item12"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item13"))) {
+			tevaluation.setItem13(ja.getJSONObject(0).getInt("item13"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item14"))) {
+			tevaluation.setItem14(ja.getJSONObject(0).getInt("item14"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item15"))) {
+			tevaluation.setItem15(ja.getJSONObject(0).getInt("item15"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item16"))) {
+			tevaluation.setItem16(ja.getJSONObject(0).getInt("item16"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item17"))) {
+			tevaluation.setItem17(ja.getJSONObject(0).getInt("item17"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item18"))) {
+			tevaluation.setItem18(ja.getJSONObject(0).getInt("item18"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item19"))) {
+			tevaluation.setItem19(ja.getJSONObject(0).getInt("item19"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item20"))) {
+			tevaluation.setItem20(ja.getJSONObject(0).getInt("item20"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item21"))) {
+			tevaluation.setItem21(ja.getJSONObject(0).getInt("item21"));
+		}
+		if (!"".equals(ja.getJSONObject(0).getString("item22"))) {
+			tevaluation.setItem22(ja.getJSONObject(0).getInt("item22"));
+		}
+	    tevaluation.setSuggestion(ja.getJSONObject(0).getString("suggestion"));
+	    tevaluation.setTime(dateFormat.format(now));
+	    tevaluation.setState(1);
+	    tevaluation.setId(Integer.valueOf(no).intValue());
+	    tevaluation.setExpert(loginname);
+	    tevaluationService.update(tevaluation);
+	    System.out.println(ja.getJSONObject(0).getString("user"));
+	    response.getWriter().write("1");
+	    
 	}
 		
 	//测试
@@ -830,8 +934,8 @@ public class ManageController {
 		ArrayList<String> valueList=new ArrayList<String>();
 		ArrayList<String> conditionList=new ArrayList<String>();
 		fieldnameList.add("expert");
-		fieldnameList.add("no");
-		valueList.add("expert1");
+		fieldnameList.add("state");
+		valueList.add(loginname);
 		valueList.add("1");
 		conditionList.add("=");
 		conditionList.add("=");
@@ -848,6 +952,9 @@ public class ManageController {
 		return "unauth/manage/expert";
 	}
 	
+	/**
+	 * 测试
+	*/
 	@RequestMapping(value="/getData")
 	public String getData(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		//获取符合条件的行数
@@ -869,6 +976,9 @@ public class ManageController {
 
 	}
 	
+	/**
+	 * 测试
+	*/
 	@RequestMapping(value="/togetData")
 	public String togetData(HttpServletRequest request, HttpServletResponse response){
 		return "unauth/manage/expert-left";

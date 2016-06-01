@@ -1,10 +1,17 @@
 package gov.lct.util;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import gov.lct.model.Tupload;
+import net.sf.json.JSONException;
 /**
  * 处理json字符串工具类
  * @author chenming
@@ -97,4 +104,5 @@ public class JSONUtil {
 		sb.append("]}");
 		return sb.toString();		
 	}
+	
 }

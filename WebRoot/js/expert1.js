@@ -9,7 +9,7 @@ $(function(){
         	var len = dataObj.rows.length;
         	$('#data').append('<tr>' +
         			'<td width="50" bgcolor="#96E0E2">'+'序号'+'</td>'+
-        			'<td bgcolor="#96E0E2">'+'用户姓名'+'</td>'+
+        			'<td bgcolor="#96E0E2">'+'姓名'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'创造性'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'先进性'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'技术难度和复杂度'+'</td>'+
@@ -38,7 +38,7 @@ $(function(){
         	for(var i = 1 ; i < len + 1;i++) {
         		$('#data').append('<tr>' +
             			'<td>'+ i +'</td>'+
-            			'<td>'+dataObj.rows[i - 1].loginname+'</td>'+
+            			'<td>'+dataObj.rows[i - 1].user+'</td>'+
             			'<td>'+dataObj.rows[i - 1].item1+'</td>'+
             			'<td>'+dataObj.rows[i - 1].item2+'</td>'+
             			'<td>'+dataObj.rows[i - 1].item3+'</td>'+
@@ -60,6 +60,7 @@ $(function(){
             			'<td>'+dataObj.rows[i - 1].item19+'</td>'+
             			'<td>'+dataObj.rows[i - 1].item20+'</td>'+
             			'<td>'+dataObj.rows[i - 1].item21+'</td>'+
+            			'<td>'+dataObj.rows[i - 1].item22+'</td>'+
             			'<td>'+dataObj.rows[i - 1].suggestion+'</td>'+
             			'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改</button>'
             			+ '<button>下载</button>' +'</td>'+
@@ -67,11 +68,11 @@ $(function(){
         	}
         }
     });
-	$("table td").click(function() {
+	/*$("table td").click(function() {
         var row = $(this).parent().index() + 1; // 行位置
         var col = $(this).index() + 1; // 列位置
         alert("当前位置：第"+row+"行，第"+col+"列")
-    });
+    });*/
 });
 
 function select(elementId) {

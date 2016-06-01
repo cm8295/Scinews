@@ -15,7 +15,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title></title>
 </head>
 <body>
-    <input type="text" value="sdfsdf"/>
     <div>
         <table border="0" cellpadding="2" cellspacing="1" id="data" style="table-layout:fixed;"></table>
     </div>
