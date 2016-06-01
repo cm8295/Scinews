@@ -22,6 +22,7 @@ $(function(){
         			'<td bgcolor="#96E0E2">'+'他人评价'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'市场适用性'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'技术辐射能力'+'</td>'+
+        			'<td bgcolor="#96E0E2">'+'市场迫切度'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'知识产权保护情况'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'经济效益'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'潜在效益'+'</td>'+
@@ -32,7 +33,7 @@ $(function(){
         			'<td bgcolor="#96E0E2">'+'政策建议'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'资源环境改善'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'评估建议'+'</td>'+
-        			'<td bgcolor="#96E0E2">'+'操作'+'</td>'+
+        			//'<td bgcolor="#96E0E2">'+'操作'+'</td>'+
         			'</tr>')
         	
         	for(var i = 1 ; i < len + 1;i++) {
@@ -62,8 +63,8 @@ $(function(){
             			'<td>'+dataObj.rows[i - 1].item21+'</td>'+
             			'<td>'+dataObj.rows[i - 1].item22+'</td>'+
             			'<td>'+dataObj.rows[i - 1].suggestion+'</td>'+
-            			'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改</button>'
-            			+ '<button>下载</button>' +'</td>'+
+            			//'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改</button>'
+            			//+ '<button>下载</button>' +'</td>'+
             			'</tr>')
         	}
         }
