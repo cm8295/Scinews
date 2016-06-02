@@ -65,11 +65,22 @@ $(function(){
     			'</tr>')
 	}
 	
-	/*$("table td").click(function() {
+	$("#data tr:gt(0)").hover(function() {
+		$(this).children("td").addClass("hover");
+		}, function() {
+		$(this).children("td").removeClass("hover");
+		});
+	
+	$("#data tbody tr:odd").css("background-color", "#bbf");
+	$("#data tbody tr:even").css("background-color","#ffc");
+	$("#data tbody tr:odd").addClass("odd")
+	$("#data tbody tr:even").addClass("even")
+	
+	$("table td").click(function() {
         var row = $(this).parent().index() + 1; // 行位置
         var col = $(this).index() + 1; // 列位置
-        alert("当前位置：第"+row+"行，第"+col+"列")
-    });*/
+        //alert("当前位置：第"+row+"行，第"+col+"列")
+    });
 	$("#btbj").click(function() {
 	        str = $(this).val()=="编辑"?"确定":"编辑";  
 	        $(this).val(str);   // 按钮被点击后，在“编辑”和“确定”之间切换
@@ -81,6 +92,10 @@ $(function(){
 	                $(this).html(obj_text.val()); 
 	        });
 	    });
+	$("#btxz").click(function(){
+		var user = $("#data tr:eq(1) td:nth-child(2)").html();
+		
+	});
 });
 
 function select(elementId) {
