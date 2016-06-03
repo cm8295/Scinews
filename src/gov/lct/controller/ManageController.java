@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.taglibs.standard.tag.common.fmt.SetTimeZoneSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,6 +58,7 @@ import gov.lct.util.*;
 import com.hp.hpl.jena.n3.RelativeURIException;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.sparql.core.Var;
+import com.hp.hpl.jena.sparql.expr.E_StrEndsWith;
 import com.hp.hpl.jena.sparql.util.Convert;
 
 
@@ -612,7 +616,7 @@ public class ManageController {
 				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
 			}
 		}else{
-			request.setAttribute("file1", "");
+			 request.setAttribute("file1", "");
 			 request.setAttribute("file2", "");
 			 request.setAttribute("file3", "");
 			 request.setAttribute("file4", "");
@@ -629,14 +633,36 @@ public class ManageController {
 			 request.setAttribute("uploadtime", "");
 			 //request.setAttribute("suggestion", "");
 		}
-		
         return "unauth/manage/user-upload";
 	}
 	
 	@RequestMapping("toupload")
 	public String toupload(){
-		
 		return "unauth/manage/upload";
+	}
+	
+	@RequestMapping({ "/template" })
+	      public void downloadTemplate(HttpServletRequest request, HttpServletResponse response)
+	              throws UnsupportedEncodingException {
+	          String path = request.getSession().getServletContext().getRealPath("");
+	          String filename = "模板文件.xls";
+	          File file = new File(path +  "\\file\\templagte\\" + filename);
+	         String userAgent = request.getHeader("User-Agent");
+	         byte[] bytes = userAgent.contains("MSIE") ? filename.getBytes() : filename.getBytes("UTF-8"); // fileName.getBytes("UTF-8")处理safari的乱码问题
+	         String fileName = new String(bytes, "ISO-8859-1"); 
+	         // 设置输出的格式
+	         response.setContentType("multipart/form-data");
+	         response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+	         
+	         InputStream inStream = null;
+	         try {
+	             inStream = new FileInputStream(file);
+	             IOUtils.copy(inStream, response.getOutputStream());//使用commons-io组件进行文件流的处理
+	         } catch (IOException e) {
+	             e.printStackTrace();
+	         }finally{
+	             IOUtils.closeQuietly(inStream);
+	         }
 	}
 	
 	@RequestMapping("/download")
@@ -656,15 +682,24 @@ public class ManageController {
 		}
         String fileName = request.getParameter("fileName");
         response.setHeader("Content-Disposition", "attachment;fileName="
-                + fileName);
+                + fileName + ".zip");
         try {
            // String path = Thread.currentThread().getContextClassLoader()
            //         .getResource("").getPath()
            //         + "download";//这个download目录为啥建立在classes下的
-        	String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/" + loginname);
-            InputStream inputStream = new FileInputStream(new File(path
-                    + File.separator + fileName));
- 
+        	String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/");
+            /*InputStream inputStream = new FileInputStream(new File(path
+                    + File.separator + fileName));*/
+        	path += File.separator + fileName;
+        	File file = new File(path);
+        	if (!file.exists()) {
+				response.getWriter().write(0);
+				return;
+			}
+        	ZipCompressor zc = new  ZipCompressor(path + ".zip");  
+            zc.compressExe(path); 
+        	InputStream inputStream = new FileInputStream(new File(path + ".zip"));
+            System.out.println(path);
             OutputStream os = response.getOutputStream();
             byte[] b = new byte[2048];
             int length;
@@ -704,7 +739,7 @@ public class ManageController {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		String email = "cm8295@163.com";//request.getParameter("email");
+		String email = "cm8295@163.com";//request.getParameter("email");获取管理员邮箱
 		String msg = null;
 		try {
 			msg=request.getParameter("msg");
@@ -714,18 +749,15 @@ public class ManageController {
 		
 		//发送邮件
 		mailSend mSend = new mailSend();
-		
 		if(msg==null){
 			msg = "管理员，您好！\r\n\r\n\r\n\r\n"
 					+ "有新提交的资料需要你查看。\r\n\r\n"
 					+ loginname + ":\r\n\r\n";
 		}
-		 
 		if (mSend.sendMail(email, "系统邮件", msg)) {
 			response.getWriter().append("1");   //状态：1:发送成功
 		} else {
 			response.getWriter().append("0");   //状态：0:发送失败
-
 		}
 		System.out.println("1"); 
 	}
@@ -950,6 +982,18 @@ public class ManageController {
 	@RequestMapping(value="/toExpert")
 	public String toExpert(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		return "unauth/manage/expert";
+	}
+	
+	/*
+	 * 资料提交时间设置
+	 * author：chenming
+	 * */
+	@RequestMapping(value="/setTime")
+	public void SetTime(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		System.out.println("setTime");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/text");
+		response.getWriter().write("1");
 	}
 	
 	/**

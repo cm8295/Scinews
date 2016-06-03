@@ -10,7 +10,7 @@ $(function(){
         	//alert(dataObj.rows.length);
         	$('#data').append('<tr>' +
         			'<td width="50" bgcolor="#96E0E2">'+'序号'+'</td>'+
-        			'<td bgcolor="#96E0E2">'+'用户姓名'+'</td>'+
+        			'<td bgcolor="#96E0E2">'+'姓名'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'评审专家'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'已提交资料'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'时间'+'</td>'+
@@ -26,7 +26,8 @@ $(function(){
             			'<td>'+dataObj.rows[i - 1].file1+'</td>'+
             			'<td>'+dataObj.rows[i - 1].uploadtime+'</td>'+
             			'<td>'+dataObj.rows[i - 1].suggestion+'</td>'+
-            			'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改</button><button>下载</button>' +'</td>'+
+            			'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改</button>'
+            			+ '<input type="button" id="btxz" onclick="down(this)">下载</button>' +'</td>'+
             			'</tr>'
         				)
         	}
@@ -38,6 +39,7 @@ $(function(){
         var col = $(this).index() + 1; // 列位置
         alert("当前位置：第"+row+"行，第"+col+"列")
     });
+	
 });
 
 
@@ -82,4 +84,35 @@ function abc(){
       	  alert(json.toString());
         }
     });*/
+}
+
+function down(elementId) {
+	var username = elementId.parentNode.parentNode.children[1].innerHTML;
+	var form=$("<form>");//定义一个form表单
+	form.attr("style","display:none");
+	form.attr("target","");
+	form.attr("method","post");
+	form.attr("enctype","multipart/form-data");
+	form.attr("action","/Scinews/manage/download?fileName=" + username);
+	var input1=$("<input>");
+	input1.attr("type","hidden");
+	input1.attr("name","exportData");
+	input1.attr("value","test");
+	$("body").append(form);//将表单放置在web中
+	form.append(input1);
+	form.submit();//表单提交
+}
+function subSetting() {
+	alert("sdf");
+	$.ajax({
+        url: $("#setId").submit(),
+        data:{"":""},
+        type: "post",
+        datatype:"json",
+        contentType:"application/x-www-form-urlencoded; charset=utf-8",
+        success: function (data) {
+            console.log(data);
+            alert(data);
+        }
+    });
 }

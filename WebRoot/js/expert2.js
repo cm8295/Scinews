@@ -33,8 +33,8 @@ $(function(){
 	for(var i = 1 ; i < len + 1;i++) {
 		$('#data').append('<tr>' +
     			'<td>'+ i +'</td>'+
-    			'<td>'+dataObj.rows[i - 1].user+'</td>'+
-    			'<td id="tt1">'+dataObj.rows[i - 1].item1+'</td>'+
+    			'<td class="user">'+dataObj.rows[i - 1].user+'</td>'+
+    			'<td id="tt1" class="item1">'+dataObj.rows[i - 1].item1+'</td>'+
                 '<td id="tt1">'+dataObj.rows[i - 1].item2+'</td>'+
                 '<td id="tt1">'+dataObj.rows[i - 1].item3+'</td>'+
                 '<td id="tt1">'+dataObj.rows[i - 1].item4+'</td>'+
@@ -57,9 +57,9 @@ $(function(){
                 '<td id="tt1">'+dataObj.rows[i - 1].item21+'</td>'+
                 '<td id="tt1">'+dataObj.rows[i - 1].suggestion+'</td>'+
     			'<td>'
-                + '<input type="button" id="btbj" value="编辑">'
+                + '<input type="button" id="btbj" onclick="edit(this)" value="编辑">'
                 //+ '<input type="button" id="bt' + i + '" onclick="select(this)" value="修改"></input>'
-    			+ '<input type="button" id="btxz" value="下载"></input>' 
+    			+ '<input type="button" id="btxz" onclick="down(this)" value="下载">'
     			+ '<input type="button" id="bt1' + i + '" onclick="submitData(this)" value="提交"></input>' 
     			+'</td>'+
     			'</tr>')
@@ -70,32 +70,10 @@ $(function(){
 		}, function() {
 		$(this).children("td").removeClass("hover");
 		});
-	
 	$("#data tbody tr:odd").css("background-color", "#bbf");
 	$("#data tbody tr:even").css("background-color","#ffc");
 	$("#data tbody tr:odd").addClass("odd")
 	$("#data tbody tr:even").addClass("even")
-	
-	$("table td").click(function() {
-        var row = $(this).parent().index() + 1; // 行位置
-        var col = $(this).index() + 1; // 列位置
-        //alert("当前位置：第"+row+"行，第"+col+"列")
-    });
-	$("#btbj").click(function() {
-	        str = $(this).val()=="编辑"?"确定":"编辑";  
-	        $(this).val(str);   // 按钮被点击后，在“编辑”和“确定”之间切换
-	        $(this).parent().siblings("#tt1").each(function() {  // 获取当前行的其他单元格
-	            obj_text = $(this).find("input:text");    // 判断单元格下是否有文本框
-	            if(!obj_text.length)   // 如果没有文本框，则添加文本框使之可以编辑
-	                $(this).html("<input type='text' value='"+$(this).text()+"'>");
-	            else   // 如果已经存在文本框，则将其显示为文本框修改的值
-	                $(this).html(obj_text.val()); 
-	        });
-	    });
-	$("#btxz").click(function(){
-		var user = $("#data tr:eq(1) td:nth-child(2)").html();
-		
-	});
 });
 
 function select(elementId) {
@@ -139,36 +117,6 @@ function testss(){
 
 
 function submitData(elementId){
-	/*var Container = document.getElementById("data");
-	var rowdata='';
-	  // 获取数据
-	  for (var i = 0; i < Container.rows.length; i++)//遍历表格
-	  {
-	    	      for (j = 0; j < Container.rows.item(0).cells.length-1; j++)
-	      {
-	           rowdata+=Container.rows.item(0).cells.item(j).childNodes[0].value+',';//得到每行的数据
-	           
-	          }
-	    	      alert(rowdata);
-	          	  }*/
-	/*var tableArr = []; //存所有数据
-    $("table tr:not(:first)").each(function(){ //便利除标题行外所有行
-        var trArr = []; //存行数据
-        trArr.push(elementId.parentNode.parentNode.children[1].innerHTML);
-        $("input,select",this).each(function(){ //便利行内的input select的值
-            trArr.push($(this).val());
-            alert($(this).val());
-        });
-        tableArr.push(trArr.join()); //行数据格式
-    });
-    var value = tableArr.join(";"); //向后台传入的值，行与行之间“;”隔开
-    $.post("/Scinews/manage/expert2",{value:value},function(data){
-        //回调函数
-    });*/
-	//alert($('table input:eq(1)').val());
-	/*for (var i = 0; i < 21; i++){
-		alert($('table input:eq(i)').val());
-	}*/
 	var table = document.getElementById("data");
 	var colums = table.rows[0].cells.length;
 	//组装json
@@ -212,9 +160,45 @@ function submitData(elementId){
             alert(data);
         }
     });
-	//alert(jsonT);
-	/*alert("user：" + elementId.parentNode.parentNode.children[0].innerHTML +
-    		"us：" + elementId.parentNode.parentNode.children[1].innerHTML +
-       "值：" + elementId.parentNode.parentNode.children[2].innerHTML);*/
-	
+}
+
+function down(elementId) {
+	var username = elementId.parentNode.parentNode.children[1].innerHTML;
+	var form=$("<form>");//定义一个form表单
+	form.attr("style","display:none");
+	form.attr("target","");
+	form.attr("method","post");
+	form.attr("enctype","multipart/form-data");
+	form.attr("action","/Scinews/manage/download?fileName=" + username);
+	var input1=$("<input>");
+	input1.attr("type","hidden");
+	input1.attr("name","exportData");
+	input1.attr("value","test");
+	$("body").append(form);//将表单放置在web中
+	form.append(input1);
+	form.submit();//表单提交
+	/*$.ajax({
+        url: "/Scinews/manage/download",
+        data:{"filename":username},
+        type: "post",
+        datatype:"json",
+        contentType:"application/x-www-form-urlencoded; charset=utf-8",
+        success: function (data) {
+            console.log(data);
+            alert(data);
+        }
+    });*/
+}
+
+function edit(elementId) {
+	str = $(elementId).val()=="编辑"?"确定":"编辑";  
+    $(elementId).val(str);   // 按钮被点击后，在“编辑”和“确定”之间切换
+    $(elementId).parent().siblings("#tt1").each(function() {  // 获取当前行的其他单元格
+    	//alert("sd");
+        obj_text = $(this).find("input:text");    // 判断单元格下是否有文本框
+        if(!obj_text.length)   // 如果没有文本框，则添加文本框使之可以编辑
+            $(this).html("<input type='text' value='"+$(this).text()+"'>");
+        else   // 如果已经存在文本框，则将其显示为文本框修改的值
+            $(this).html(obj_text.val()); 
+    });
 }
