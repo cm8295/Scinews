@@ -386,6 +386,68 @@ public class ManageController {
 	
 	@RequestMapping(value="/userstate")
 	public String userState(HttpServletRequest request) throws Exception {	
+		String loginname = null;
+		try {
+			HttpSession session = request.getSession();	
+			//String realname = session.getAttribute("realname").toString();
+			loginname = session.getAttribute("loginname").toString();	
+			//System.out.println(realname);
+			System.out.println(loginname);
+			if (loginname.equals(null)) {
+				return "/error";
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			return "/error";
+		}
+		//设置时间
+        request.setAttribute("endtime", "2015-05-05 21:12:12");
+        //
+        
+        Collection availableItems = null;
+		availableItems = tuploadService.queryItems(Tupload.class, "loginname", loginname, "=", "id", 50, 0);
+		Iterator patents = null;
+		if(availableItems!=null)
+		{
+			patents = availableItems.iterator();
+			while(patents.hasNext())
+			{
+				 Tupload upload = (Tupload)patents.next();
+				 request.setAttribute("file1", StringProcess.getString(upload.getFile1()));
+				 request.setAttribute("file2", StringProcess.getString(upload.getFile2()));
+				 request.setAttribute("file3", StringProcess.getString(upload.getFile3()));
+				 request.setAttribute("file4", StringProcess.getString(upload.getFile4()));
+				 request.setAttribute("file5", StringProcess.getString(upload.getFile5()));
+				 request.setAttribute("file6", StringProcess.getString(upload.getFile6()));
+				 request.setAttribute("file7", StringProcess.getString(upload.getFile7()));
+				 request.setAttribute("file8", StringProcess.getString(upload.getFile8()));
+				 request.setAttribute("file9", StringProcess.getString(upload.getFile9()));
+				 request.setAttribute("file10", StringProcess.getString(upload.getFile10()));
+				 request.setAttribute("file11", StringProcess.getString(upload.getFile11()));
+				 request.setAttribute("file12", StringProcess.getString(upload.getFile12()));
+				 request.setAttribute("file13", StringProcess.getString(upload.getFile13()));
+				 request.setAttribute("file14", StringProcess.getString(upload.getFile14()));
+				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
+				 request.setAttribute("suggestion", StringProcess.getString(upload.getSuggestion()));
+			}
+		}else{
+			request.setAttribute("file1", StringProcess.getString(""));
+			 request.setAttribute("file2", StringProcess.getString(""));
+			 request.setAttribute("file3", StringProcess.getString(""));
+			 request.setAttribute("file4", StringProcess.getString(""));
+			 request.setAttribute("file5", StringProcess.getString(""));
+			 request.setAttribute("file6", StringProcess.getString(""));
+			 request.setAttribute("file7", StringProcess.getString(""));
+			 request.setAttribute("file8", StringProcess.getString(""));
+			 request.setAttribute("file9", StringProcess.getString(""));
+			 request.setAttribute("file10", StringProcess.getString(""));
+			 request.setAttribute("file11", StringProcess.getString(""));
+			 request.setAttribute("file12", StringProcess.getString(""));
+			 request.setAttribute("file13", StringProcess.getString(""));
+			 request.setAttribute("file14", StringProcess.getString(""));
+			 request.setAttribute("uploadtime", StringProcess.getString(""));
+			 request.setAttribute("suggestion", StringProcess.getString(""));
+		}
         return "unauth/manage/user-state";
 	}
 	
@@ -433,31 +495,29 @@ public class ManageController {
 				 request.setAttribute("file13", StringProcess.getString(upload.getFile13()));
 				 request.setAttribute("file14", StringProcess.getString(upload.getFile14()));
 				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
+				 request.setAttribute("suggestion", StringProcess.getString(upload.getSuggestion()));
 			}
 		}else{
-			request.setAttribute("file1", "");
-			 request.setAttribute("file2", "");
-			 request.setAttribute("file3", "");
-			 request.setAttribute("file4", "");
-			 request.setAttribute("file5", "");
-			 request.setAttribute("file6", "");
-			 request.setAttribute("file7", "");
-			 request.setAttribute("file8", "");
-			 request.setAttribute("file9", "");
-			 request.setAttribute("file10", "");
-			 request.setAttribute("file11", "");
-			 request.setAttribute("file12", "");
-			 request.setAttribute("file13", "");
-			 request.setAttribute("file14", "");
-			 request.setAttribute("uploadtime", "");
+			request.setAttribute("file1", StringProcess.getString(""));
+			 request.setAttribute("file2", StringProcess.getString(""));
+			 request.setAttribute("file3", StringProcess.getString(""));
+			 request.setAttribute("file4", StringProcess.getString(""));
+			 request.setAttribute("file5", StringProcess.getString(""));
+			 request.setAttribute("file6", StringProcess.getString(""));
+			 request.setAttribute("file7", StringProcess.getString(""));
+			 request.setAttribute("file8", StringProcess.getString(""));
+			 request.setAttribute("file9", StringProcess.getString(""));
+			 request.setAttribute("file10", StringProcess.getString(""));
+			 request.setAttribute("file11", StringProcess.getString(""));
+			 request.setAttribute("file12", StringProcess.getString(""));
+			 request.setAttribute("file13", StringProcess.getString(""));
+			 request.setAttribute("file14", StringProcess.getString(""));
+			 request.setAttribute("uploadtime", StringProcess.getString(""));
+			 request.setAttribute("suggestion", StringProcess.getString(""));
 		}
-		
-		
 	    //request.setAttribute("availableItems", availableItems); 
 		return "unauth/manage/user-upload";
 	}
-	
-	
 	
 	@RequestMapping("/upload")
 	public String upload(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
@@ -498,8 +558,26 @@ public class ManageController {
                 int pre = (int) System.currentTimeMillis(); 
                 //取得上传文件  
                 MultipartFile file = multiRequest.getFile(iter.next());
+                //校验文件是否合法
+                String[] formatCheck = {".doc",".docx",".pdf",".xls",".jpg",".png",".jpeg"};
+                String tempCheck = file.getOriginalFilename();
+                String fix="." + tempCheck.substring(tempCheck.lastIndexOf(".")+1);
+                boolean isRightFile = false;
+                for(int i = 0; i < formatCheck.length; i++){
+                	if (formatCheck[0] != fix) {
+						continue;
+					} else {
+						isRightFile = true;
+						break;
+					}
+                }
+                if (!isRightFile) {
+					continue;
+				}
                 //临时存储路径
                 String path = null; 
+                //更新的文件名
+                String newFileName = null;
                 if(file != null){  
                     //取得当前上传文件的文件名称  
                     String myFileName = file.getOriginalFilename();  
@@ -507,9 +585,56 @@ public class ManageController {
                     if(myFileName.trim() !=""){  
                         System.out.println(myFileName);  
                         //重命名上传后的文件名  
-                        String fileName = file.getOriginalFilename();  
+                        String fileName = file.getOriginalFilename();
+                        
+                        switch (file.getName()) {
+        				case "file1":
+        					newFileName = "科技查新报告";
+        					break;
+        				case "file2":
+        					newFileName = "研制报告";
+        					break;
+        				case "file3":
+        					newFileName = "背景材料";
+        					break;
+        				case "file4":
+        					newFileName = "成果的审批文件";
+        					break;
+        				case "file5":
+        					newFileName = "论文发表收录及引用证明";
+        					break;
+        				case "file6":
+        					newFileName = "知识产权证明";
+        					break;
+        				case "file7":
+        					newFileName = "推广应用产生的经济效益或者社会效益";
+        					break;
+        				case "file8":
+        					newFileName = "奖项证明";
+        					break;
+        				case "file9":
+        					newFileName = "著作证明";
+        					break;
+        				case "file10":
+        					newFileName = "测试分析报告";
+        					break;
+        				case "file11":
+        					newFileName = "主要实验";
+        					break;
+        				case "file12":
+        					newFileName = "测试记录报告";
+        					break;
+        				case "file13":
+        					newFileName = "产品检测报告";
+        					break;
+        				case "file14":
+        					newFileName = "环境生态效益证明";
+        					break;
+        				default:
+        					break;
+        				}
                         System.out.println(file.getName());
-                        //定义上传路径  request.getSession().getServletContext().getRealPath("/WEB-INF/upload/" + loginname);
+                        //定义上传路径 
                         String dir = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/" + loginname);
                         File fileDir = new File(dir);
                         if (!fileDir.exists() && !fileDir.isDirectory()) {
@@ -518,7 +643,13 @@ public class ManageController {
                         path = dir + File.separator + fileName;
                         System.out.println(path);
                         File localFile = new File(path);  
-                        file.transferTo(localFile);  
+                        file.transferTo(localFile); 
+                        //获取后缀名
+                        String tempName = localFile.getName();
+                        String prefix=tempName.substring(tempName.lastIndexOf(".")+1);
+                        newFileName += "." + prefix;
+                        localFile.renameTo(new File(dir + File.separator + newFileName));
+                        System.out.println(dir + File.separator + newFileName);
                     }else{
                     	continue;
                     }
@@ -529,46 +660,46 @@ public class ManageController {
                 System.out.println(finaltime - pre);
                 switch (file.getName()) {
 				case "file1":
-					tupload.setFile1(file.getOriginalFilename());
+					tupload.setFile1(newFileName);
 					break;
 				case "file2":
-					tupload.setFile2(file.getOriginalFilename());
+					tupload.setFile2(newFileName);
 					break;
 				case "file3":
-					tupload.setFile3(file.getOriginalFilename());
+					tupload.setFile3(newFileName);
 					break;
 				case "file4":
-					tupload.setFile4(file.getOriginalFilename());
+					tupload.setFile4(newFileName);
 					break;
 				case "file5":
-					tupload.setFile5(file.getOriginalFilename());
+					tupload.setFile5(newFileName);
 					break;
 				case "file6":
-					tupload.setFile6(file.getOriginalFilename());
+					tupload.setFile6(newFileName);
 					break;
 				case "file7":
-					tupload.setFile7(file.getOriginalFilename());
+					tupload.setFile7(newFileName);
 					break;
 				case "file8":
-					tupload.setFile8(file.getOriginalFilename());
+					tupload.setFile8(newFileName);
 					break;
 				case "file9":
-					tupload.setFile9(file.getOriginalFilename());
+					tupload.setFile9(newFileName);
 					break;
 				case "file10":
-					tupload.setFile10(file.getOriginalFilename());
+					tupload.setFile10(newFileName);
 					break;
 				case "file11":
-					tupload.setFile11(file.getOriginalFilename());
+					tupload.setFile11(newFileName);
 					break;
 				case "file12":
-					tupload.setFile12(file.getOriginalFilename());
+					tupload.setFile12(newFileName);
 					break;
 				case "file13":
-					tupload.setFile13(file.getOriginalFilename());
+					tupload.setFile13(newFileName);
 					break;
 				case "file14":
-					tupload.setFile14(file.getOriginalFilename());
+					tupload.setFile14(newFileName);
 					break;
 				default:
 					break;
@@ -579,7 +710,6 @@ public class ManageController {
             String retStrFormatNowDate = sdFormatter.format(nowTime);
             tupload.setUploadtime(retStrFormatNowDate);
             if (tuploadService.getRows(Tupload.class, "loginname", loginname, "=") != 0) {
-         		    
             	tuploadService.update(tupload);
 			}else{
 				tuploadService.save(tupload);
@@ -589,7 +719,6 @@ public class ManageController {
         //设置时间
         request.setAttribute("endtime", "2015-05-05 21:12:12");
         //
-        
         Collection availableItems = null;
 		availableItems = tuploadService.queryItems(Tupload.class, "loginname", loginname, "=", "id", 50, 0);
 		Iterator patents = null;
@@ -616,22 +745,22 @@ public class ManageController {
 				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
 			}
 		}else{
-			 request.setAttribute("file1", "");
-			 request.setAttribute("file2", "");
-			 request.setAttribute("file3", "");
-			 request.setAttribute("file4", "");
-			 request.setAttribute("file5", "");
-			 request.setAttribute("file6", "");
-			 request.setAttribute("file7", "");
-			 request.setAttribute("file8", "");
-			 request.setAttribute("file9", "");
-			 request.setAttribute("file10", "");
-			 request.setAttribute("file11", "");
-			 request.setAttribute("file12", "");
-			 request.setAttribute("file13", "");
-			 request.setAttribute("file14", "");
-			 request.setAttribute("uploadtime", "");
-			 //request.setAttribute("suggestion", "");
+			request.setAttribute("file1", StringProcess.getString(""));
+			 request.setAttribute("file2", StringProcess.getString(""));
+			 request.setAttribute("file3", StringProcess.getString(""));
+			 request.setAttribute("file4", StringProcess.getString(""));
+			 request.setAttribute("file5", StringProcess.getString(""));
+			 request.setAttribute("file6", StringProcess.getString(""));
+			 request.setAttribute("file7", StringProcess.getString(""));
+			 request.setAttribute("file8", StringProcess.getString(""));
+			 request.setAttribute("file9", StringProcess.getString(""));
+			 request.setAttribute("file10", StringProcess.getString(""));
+			 request.setAttribute("file11", StringProcess.getString(""));
+			 request.setAttribute("file12", StringProcess.getString(""));
+			 request.setAttribute("file13", StringProcess.getString(""));
+			 request.setAttribute("file14", StringProcess.getString(""));
+			 request.setAttribute("uploadtime", StringProcess.getString(""));
+			 request.setAttribute("suggestion", StringProcess.getString(""));
 		}
         return "unauth/manage/user-upload";
 	}
@@ -990,6 +1119,7 @@ public class ManageController {
 	 * */
 	@RequestMapping(value="/setTime")
 	public void SetTime(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		
 		System.out.println("setTime");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/text");

@@ -62,6 +62,8 @@ public class Tupload {
 	@Column(name="uploadtime")
 	private String uploadtime;
 
+	@Column(name="suggestion")
+	private String suggestion;
 	
 	@Column(name="expert")
 	private String expert;
@@ -208,6 +210,14 @@ public class Tupload {
 
 	public void setUploadtime(String uploadtime) {
 		this.uploadtime = uploadtime;
+	}
+
+	public String getSuggestion() {
+		return suggestion;
+	}
+
+	public void setSuggestion(String suggestion) {
+		this.suggestion = suggestion;
 	}
 
 	
