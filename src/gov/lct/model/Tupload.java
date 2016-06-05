@@ -219,6 +219,4 @@ public class Tupload {
 	public void setSuggestion(String suggestion) {
 		this.suggestion = suggestion;
 	}
-
-	
 }

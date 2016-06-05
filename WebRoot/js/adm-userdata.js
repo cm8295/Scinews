@@ -9,8 +9,11 @@ $(function(){
         	var len = dataObj.rows.length;
         	//alert(dataObj.rows.length);
         	$('#data').append('<tr>' +
-        			'<td width="50" bgcolor="#96E0E2">'+'序号'+'</td>'+
+        			'<td bgcolor="#96E0E2">'+'序号'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'姓名'+'</td>'+
+        			'<td bgcolor="#96E0E2">' + '单位' + '</td>' +
+        			'<td bgcolor="#96E0E2">' + '邮箱' + '</td>' +
+        			'<td bgcolor="#96E0E2">' + '电话' + '</td>' +
         			'<td bgcolor="#96E0E2">'+'评审专家'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'已提交资料'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'时间'+'</td>'+
@@ -22,12 +25,15 @@ $(function(){
         		$('#data').append('<tr>' +
             			'<td>'+ i +'</td>'+
             			'<td>'+dataObj.rows[i - 1].loginname+'</td>'+
+            			'<td>'+ /*dataObj.rows[i - 1].institute*/'中科院文献情报中心' +'</td>'+
+            			'<td>'+ /*dataObj.rows[i - 1].email*/'cm8295@163.com' +'</td>'+
+            			'<td>'+ /*dataObj.rows[i - 1].mobile*/'18595647894' +'</td>'+
             			'<td>'+dataObj.rows[i - 1].expert+'</td>'+
             			'<td>'+dataObj.rows[i - 1].file1+'</td>'+
             			'<td>'+dataObj.rows[i - 1].uploadtime+'</td>'+
             			'<td>'+dataObj.rows[i - 1].suggestion+'</td>'+
-            			'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改</button>'
-            			+ '<input type="button" id="btxz" onclick="down(this)">下载</button>' +'</td>'+
+            			'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改意见</button>'
+            			+ '<input type="button" id="btxz1" onclick="down(this)" value="下载"/>' + '</td>'+
             			'</tr>'
         				)
         	}
@@ -39,51 +45,40 @@ $(function(){
         var col = $(this).index() + 1; // 列位置
         alert("当前位置：第"+row+"行，第"+col+"列")
     });
-	
 });
 
 
 function select(elementId) {
-    alert("序号：" + elementId.parentNode.parentNode.children[0].innerHTML +
-        "用户：" + elementId.parentNode.parentNode.children[1].innerHTML);
+	//alert(elementId.parentNode.parentNode.children[1].innerHTML);
+	window.showModalDialog("/Scinews/manage/getSuggestion?user=" + elementId.parentNode.parentNode.children[1].innerHTML);
+	/*val dataObj="";
+	$.ajax({
+        url: "/Scinews/manage/getSuggestion",
+        data:{"user":elementId.parentNode.parentNode.children[1].innerHTML},
+        type: "post",
+        contentType:"application/json",
+        success: function (data) {
+        	dataObj=eval("("+data+")");//转换为json对象 
+        	var len = dataObj.rows.length;
+        	'<select name="role" multiple="multiple" size="5">'
+              	for(var i = 1 ; i < len + 1;i++) {
+                   '<option value='+ dataObj.rows[i - 1].expert + ':' + dataObj.rows[i - 1].suggestion +'</option>'
+              	}
+               '</select>'   
+        }
+    });*/
+	
+	/*var d = dialog({
+	    title: 'message',
+	    content: '<input autofocus />'
+	});
+	d.showModal();*/
+    /*alert("序号：" + elementId.parentNode.parentNode.children[0].innerHTML +
+        "用户：" + elementId.parentNode.parentNode.children[1].innerHTML);*/
 }
 
 function abc(){
-	window.showModalDialog("/Scinews/manage/upload");
-	/*var mydata = null;
-	$.ajax({
-        url: "/Scinews/manage/patentmanagement",
-        type: "post",
-        //datatype:"",
-        contentType:"application/json",
-        success: function (data) {
-        	var dataObj=eval("("+data+")");//转换为json对象 
-        	alert(dataObj.rows.length);//输出root的子对象数量 
-        	alert(dataObj.rows[0].file1);
-        	//var parsedJson = jQuery.parseJSON(data); 
-        	//alert(parsedJson.rows[1].id);
-        	//alert(parsedJson.total);
-        	//var parsedJson1 = jQuery.parseJSON(data.rows); 
-        	//alert(parsedJson1.id);
-        	//var ddd = data.toJSONString();
-        	//alert(ddd);
-        	 $.each(data.rows, function(i, item) {
-                 alert(item.file1);
-             });
-        	 
-        }
-    });*/
-	/*$.ajax({
-        url: "/Scinews/manage/patentmanagement",
-        //data: "name=dfsdf",
-        type: "post",
-        //datatype:"json",
-        contentType:"application/json",
-        success: function (result) {
-      	  JSONObject json = JSONObject.fromObject(result);
-      	  alert(json.toString());
-        }
-    });*/
+	window.showModalDialog("/Scinews/manage/getSuggestion?user=test");
 }
 
 function down(elementId) {

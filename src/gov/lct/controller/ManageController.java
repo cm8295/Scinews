@@ -40,6 +40,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
@@ -386,7 +387,7 @@ public class ManageController {
 	
 	@RequestMapping(value="/userstate")
 	public String userState(HttpServletRequest request) throws Exception {	
-		String loginname = null;
+		String loginname = null;   
 		try {
 			HttpSession session = request.getSession();	
 			//String realname = session.getAttribute("realname").toString();
@@ -402,12 +403,32 @@ public class ManageController {
 		}
 		//设置时间
         request.setAttribute("endtime", "2015-05-05 21:12:12");
-        //
+        /*//获取建议
+      //获取符合条件的行数
+      		ArrayList<String> fieldnameList=new ArrayList<String>();
+      		ArrayList<String> valueList=new ArrayList<String>();
+      		ArrayList<String> conditionList=new ArrayList<String>();
+      		fieldnameList.add("user");
+      		//fieldnameList.add("no");
+      		valueList.add(loginname);
+      		//valueList.add("1");
+      		conditionList.add("=");
+      		//conditionList.add("=");
+      		Collection availableItems1 = null;
+    		availableItems1 = tevaluationService.queryItems(Tevaluation.class, fieldnameList, valueList, conditionList);
+        Iterator patents1 = null; 
+        if (availableItems1!=null) {
+			patents1 = availableItems1.iterator();
+			while (patents1.hasNext()) {
+				
+			}
+		}*/
         
         Collection availableItems = null;
 		availableItems = tuploadService.queryItems(Tupload.class, "loginname", loginname, "=", "id", 50, 0);
+		int num = tuploadService.getRows(Tupload.class, "loginname", loginname, "=");
 		Iterator patents = null;
-		if(availableItems!=null)
+		if(availableItems!=null && num != 0)
 		{
 			patents = availableItems.iterator();
 			while(patents.hasNext())
@@ -430,7 +451,7 @@ public class ManageController {
 				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
 				 request.setAttribute("suggestion", StringProcess.getString(upload.getSuggestion()));
 			}
-		}else{
+		}else{   
 			request.setAttribute("file1", StringProcess.getString(""));
 			 request.setAttribute("file2", StringProcess.getString(""));
 			 request.setAttribute("file3", StringProcess.getString(""));
@@ -447,7 +468,7 @@ public class ManageController {
 			 request.setAttribute("file14", StringProcess.getString(""));
 			 request.setAttribute("uploadtime", StringProcess.getString(""));
 			 request.setAttribute("suggestion", StringProcess.getString(""));
-		}
+		}  
         return "unauth/manage/user-state";
 	}
 	
@@ -559,18 +580,17 @@ public class ManageController {
                 //取得上传文件  
                 MultipartFile file = multiRequest.getFile(iter.next());
                 //校验文件是否合法
-                String[] formatCheck = {".doc",".docx",".pdf",".xls",".jpg",".png",".jpeg"};
+                String[] formatCheck = {"doc","docx","pdf","xls","jpg","png","jpeg"};
                 String tempCheck = file.getOriginalFilename();
-                String fix="." + tempCheck.substring(tempCheck.lastIndexOf(".")+1);
+                String fix = tempCheck.substring(tempCheck.lastIndexOf(".")+1);
                 boolean isRightFile = false;
-                for(int i = 0; i < formatCheck.length; i++){
-                	if (formatCheck[0] != fix) {
-						continue;
-					} else {
-						isRightFile = true;
+                for (String str : formatCheck) {
+                	if (str.equals(fix)) {
+                		isRightFile = true;
 						break;
 					}
-                }
+				}
+     
                 if (!isRightFile) {
 					continue;
 				}
@@ -898,11 +918,99 @@ public class ManageController {
 	public void patentmanagement(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		List<Tupload> list = tuploadService.findAll(Tupload.class);
 		int len = tuploadService.getRows(Tupload.class);
+		/*List<Tuser> list1 = tuserservice.findAll(Tuser.class);
+		len += tuserservice.getRows(Tuser.class);
+		list.addAll(list1);*/
 		String jsonStr = JSONUtil.listToJsonString(list, len);
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/text");
 		response.getWriter().write(jsonStr);
+	}
+	
+	/*
+	 * 获取专家审核意见
+	 * */
+	@RequestMapping("/getSuggestion")
+	public String getSuggestion(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		ArrayList<String> fieldnameList=new ArrayList<String>();
+		ArrayList<String> valueList=new ArrayList<String>();
+		ArrayList<String> conditionList=new ArrayList<String>();
+		fieldnameList.add("user");
+		valueList.add(request.getParameter("user"));
+		conditionList.add("=");
+		
+		Collection availableItems = null;
+		availableItems = tevaluationService.queryItems(Tevaluation.class, fieldnameList, valueList, conditionList);
+	    request.setAttribute("availableItems", availableItems); 
+		
+		/*List<Tevaluation> list = tevaluationService.queryItems(Tevaluation.class, fieldnameList, valueList, conditionList);
+		int num = tevaluationService.getRows(Tevaluation.class, fieldnameList, valueList, conditionList);
+		String kkk = JSONUtil.listToJsonString(list,num);
+		JSONObject jsonData = JSONObject.fromObject(kkk);
+		request.setAttribute("jsonData", jsonData);*/
+		request.setAttribute("user", request.getParameter("user"));
+		return "unauth/manage/suggest";
+	}
+	
+	/*
+	 * 给用户建议
+	 * */
+	@RequestMapping("/userSuggestion")
+	public void userSuggestion(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	    Tupload tupload = new Tupload();
+	    //取出主键
+	    ArrayList<String> fieldnameList=new ArrayList<String>();
+		ArrayList<String> valueList=new ArrayList<String>();
+		ArrayList<String> conditionList=new ArrayList<String>();
+		fieldnameList.add("loginname");
+		valueList.add(request.getParameter("loginname"));
+		conditionList.add("=");
+		
+		Collection availableItems = null;
+		Iterator upload = null;
+		availableItems = tuploadService.queryItems(Tupload.class, fieldnameList, valueList, conditionList);
+		tupload = (Tupload)availableItems.iterator().next();
+		/*
+		if (availableItems != null) {
+			upload = availableItems.iterator();
+			upload.hasNext();
+			//Tupload uploadData = (Tupload)upload.next();
+			tupload = (Tupload)upload.next();
+			tupload.setId(uploadData.getId());
+		}*/
+	    
+	    String[] suggesttype = request.getParameterValues("suggest");
+	      String suggestinfo = "";
+	      if(suggesttype!=null)
+	      {
+	    	 for(int i=0; i<suggesttype.length; i++)
+	    	 {
+	    	   if(i==0)	 
+	    		   suggestinfo = suggesttype[i];
+	    	   else
+	    		   suggestinfo = suggestinfo + suggesttype[i];  
+	    	 }
+	      }
+	    tupload.setSuggestion(suggestinfo);
+	    //tupload.setLoginname(request.getParameter("loginname"));
+	    
+	    tuploadService.update(tupload);
+		/*ArrayList<String> fieldnameList=new ArrayList<String>();
+		ArrayList<String> valueList=new ArrayList<String>();
+		ArrayList<String> conditionList=new ArrayList<String>();
+		fieldnameList.add("user");
+		valueList.add(request.getParameter("user"));
+		conditionList.add("=");
+		
+		Collection availableItems = null;
+		availableItems = tevaluationService.queryItems(Tevaluation.class, fieldnameList, valueList, conditionList);
+	    request.setAttribute("availableItems", availableItems); */
+		//response.getWriter().write(1);
+	    response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+	    PrintWriter out = response.getWriter();	
+	    out.append("提交成功！");
 	}
 	
 	/*

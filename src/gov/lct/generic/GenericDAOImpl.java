@@ -34,6 +34,11 @@ public class GenericDAOImpl<T, ID extends Serializable> extends HibernateDaoSupp
 	public void updateEntity(T entity) {
 		this.getHibernateTemplate().update(entity);
 	}
+	
+	public void updateEntity(String entityClass,String fieldname, String value, String fieldname1, String value1){
+		String sql = "update " + entityClass + " set " + fieldname + "='" + value + "' where " + fieldname1 + "='" + value + "'";
+		
+	}
 
 	
 	public List<T> findAllEntity(Class<T> entityClass) {

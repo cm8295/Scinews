@@ -8,7 +8,8 @@ public interface GenericDAO<T, ID extends Serializable> {
 	public void saveEntity(T entity); // ��Ӽ�¼
 	public void updateEntity(T entity); // �޸ļ�¼
 	public void deleteEntity(T entity); // ɾ���¼
-	
+
+	public void updateEntity(String entityClass,String fieldname, String value, String fieldname1, String value1);
 	//������еļ�¼��
 	public List<T> findAllEntity(Class<T> entityClass);  // ��ñ���������Ϣ��¼
 	public List<T> findAllEntity(Class<T> entityClass, int pageSize,int startRow);  // ���ָ����ʼλ�õ�һ�μ�¼
@@ -35,4 +36,5 @@ public interface GenericDAO<T, ID extends Serializable> {
 	public List<String> findTwoTableColumnName(String entityClass1,String entityClass2,String columnName,String linkName,String valueName,String value);
 	
 	public List<T> queryEntityInItems(String entityClass, String infield, String newtable, String subclause, String sortfield, String sortmethod, int pageSize, int startRow); // �ú���in�������
+	
 }
