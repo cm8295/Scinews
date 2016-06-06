@@ -1,8 +1,16 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>   
 <%@ page import="java.util.Collection"%>
 <%@ page import="gov.lct.model.Tupload"%>
+<%@ page import="gov.lct.model.Titems"%>
 <%
 String endtime = (String)request.getAttribute("endtime");
+Collection avcollection = null;
+avcollection = (Collection)request.getAttribute("items");
+Iterator iterator = null;
+if(avcollection != null){
+	iterator = avcollection.iterator();
+}
+
 %>
 <html>
 <head>
@@ -38,6 +46,20 @@ function check(form){
 						<tr>
 						    <td align="left" class="white" style="padding-left: 20px">
 								<label name="username">材料提交截至时间：<%=endtime%></label>
+							</td>
+							<td align="left" class="white" style="padding-left: 20px">
+								评审项目： <select id="search" name="search">
+											<%
+											  if(avcollection != null){
+												  while(iterator.hasNext()){
+													  Titems itemInfo = (Titems)iterator.next();
+											%>
+													  <option value=<%=itemInfo.getNumber() %>><%=itemInfo.getItems() %></option>
+											<%
+												  }
+											  }
+											%>
+  									  </select>
 							</td>
 							<td align="right" class="white" style="padding-right: 20px">
 								<label name="username">用戶名：<%=request.getSession().getAttribute("loginname")%></label>

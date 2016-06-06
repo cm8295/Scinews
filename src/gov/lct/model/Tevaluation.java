@@ -97,6 +97,9 @@ public class Tevaluation {
 	
 	@Column(name="state")
 	private Integer state;
+	
+	@Column(name="number")
+	private String number;
 
 	public Integer getId() {
 		return id;
@@ -328,6 +331,14 @@ public class Tevaluation {
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	
 	

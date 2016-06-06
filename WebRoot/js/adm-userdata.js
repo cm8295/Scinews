@@ -33,8 +33,10 @@ $(function(){
             			'<td>'+dataObj.rows[i - 1].uploadtime+'</td>'+
             			'<td>'+dataObj.rows[i - 1].suggestion+'</td>'+
             			'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改意见</button>'
-            			+ '<input type="button" id="btxz1" onclick="down(this)" value="下载"/>' + '</td>'+
-            			'</tr>'
+            			+ '<input type="button" id="btxz1" onclick="down(this)" value="下载"/>'
+            			+ '<input type="button" id="btzj" onclick="change(this)" value="设置专家"/>'
+            			+ '</td>'
+            			+ '</tr>'
         				)
         	}
         	//alert(dataObj.rows[0].file1);
@@ -98,7 +100,7 @@ function down(elementId) {
 	form.submit();//表单提交
 }
 function subSetting() {
-	alert("sdf");
+	//alert("sdf");
 	$.ajax({
         url: $("#setId").submit(),
         data:{"":""},
@@ -110,4 +112,8 @@ function subSetting() {
             alert(data);
         }
     });
+}
+
+function change(elementId) {
+	var username = elementId.parentNode.parentNode.children[1].innerHTML;
 }

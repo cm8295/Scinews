@@ -14,8 +14,10 @@ import net.sf.json.JSONObject;
 import gov.lct.model.Trequire;
 import gov.lct.service.TrequireService;
 import gov.lct.model.Tevaluation;
+import gov.lct.model.Titems;
 import gov.lct.model.Tpatentbasicinfo;
 import gov.lct.service.TevaluationService;
+import gov.lct.service.TitemsService;
 import gov.lct.service.TpatentbasicinfoService;
 
 import java.io.File;
@@ -34,8 +36,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-
-
+import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -85,7 +86,10 @@ public class ManageController {
 	private TevaluationService tevaluationService;
 	@Autowired
 	private TuserService tuserservice;
-	
+	@Autowired
+	private TitemsService titemsService;
+	@Autowired
+	private TtimesetService ttimesetservice;
 	
 	@RequestMapping(value="/index")
 	public String Manage(HttpServletRequest request) throws Exception {	
@@ -450,6 +454,7 @@ public class ManageController {
 				 request.setAttribute("file14", StringProcess.getString(upload.getFile14()));
 				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
 				 request.setAttribute("suggestion", StringProcess.getString(upload.getSuggestion()));
+				 request.setAttribute("number", StringProcess.getString(upload.getNumber()));
 			}
 		}else{   
 			request.setAttribute("file1", StringProcess.getString(""));
@@ -468,6 +473,7 @@ public class ManageController {
 			 request.setAttribute("file14", StringProcess.getString(""));
 			 request.setAttribute("uploadtime", StringProcess.getString(""));
 			 request.setAttribute("suggestion", StringProcess.getString(""));
+			 request.setAttribute("number", StringProcess.getString(""));
 		}  
         return "unauth/manage/user-state";
 	}
@@ -517,6 +523,7 @@ public class ManageController {
 				 request.setAttribute("file14", StringProcess.getString(upload.getFile14()));
 				 request.setAttribute("uploadtime", StringProcess.getString(upload.getUploadtime()));
 				 request.setAttribute("suggestion", StringProcess.getString(upload.getSuggestion()));
+				 request.setAttribute("number", StringProcess.getString(upload.getNumber()));
 			}
 		}else{
 			request.setAttribute("file1", StringProcess.getString(""));
@@ -535,6 +542,7 @@ public class ManageController {
 			 request.setAttribute("file14", StringProcess.getString(""));
 			 request.setAttribute("uploadtime", StringProcess.getString(""));
 			 request.setAttribute("suggestion", StringProcess.getString(""));
+			 request.setAttribute("number", StringProcess.getString(""));
 		}
 	    //request.setAttribute("availableItems", availableItems); 
 		return "unauth/manage/user-upload";
@@ -574,6 +582,20 @@ public class ManageController {
      		    tupload = (Tupload)availableItems.iterator().next();
             }
             tupload.setLoginname(loginname);
+            //存储上传类别
+            String[] datatype = request.getParameterValues("search");
+  	      String datainfo = "";
+  	      if(datatype!=null)
+  	      {
+  	    	 for(int i=0; i<datatype.length; i++)
+  	    	 {
+  	    	   if(i==0)	 
+  	    		 datainfo = datatype[i];
+  	    	   else
+  	    		 datainfo = datainfo + datatype[i];  
+  	    	 }
+  	      }
+            tupload.setNumber(datainfo);
             while(iter.hasNext()){  
                 //记录上传过程起始时的时间，用来计算上传时间  
                 int pre = (int) System.currentTimeMillis(); 
@@ -738,6 +760,10 @@ public class ManageController {
         System.out.println(String.valueOf(System.currentTimeMillis()));
         //设置时间
         request.setAttribute("endtime", "2015-05-05 21:12:12");
+        //获取项目
+        Collection items = null;
+        items = titemsService.findAll(Titems.class);
+        request.setAttribute("items", items);
         //
         Collection availableItems = null;
 		availableItems = tuploadService.queryItems(Tupload.class, "loginname", loginname, "=", "id", 50, 0);
@@ -1234,6 +1260,69 @@ public class ManageController {
 		response.getWriter().write("1");
 	}
 	
+	/*
+	 * 选择评审专家
+	 * author：chenming
+	 * */
+	@RequestMapping(value="/choiceexpert")
+	public void choiceExpert(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+		//用户提交材料的类别
+		String dataType = request.getParameter("dataType");
+		//获取类别的专家角色代码
+		if (dataType.equals(null)) {
+			return;
+		}
+		ArrayList<String> fieldnameList1=new ArrayList<String>();
+		ArrayList<String> valueList1=new ArrayList<String>();
+		ArrayList<String> conditionList1=new ArrayList<String>();
+		fieldnameList1.add("number");
+		valueList1.add(dataType);
+		conditionList1.add("=");
+		Collection availcollection1 = null;
+		availcollection1 = (Collection)titemsService.queryItems(Titems.class, fieldnameList1, valueList1, conditionList1);
+		Iterator iterator1 = null;
+		iterator1 = availcollection1.iterator();
+		Titems titems = (Titems)iterator1.next();
+		String role = titems.getRole();
+		if (role.equals(null)) {
+			return ;
+		}
+		//获取该类别的所有专家
+		ArrayList<String> fieldnameList2=new ArrayList<String>();
+		ArrayList<String> valueList2=new ArrayList<String>();
+		ArrayList<String> conditionList2=new ArrayList<String>();
+		fieldnameList2.add("role");
+		valueList2.add(role);
+		conditionList2.add("like");
+		Collection availcollection2 = null;
+		availcollection2 = (Collection)tuserservice.queryItems(Tuser.class, fieldnameList2, valueList2, conditionList2);
+		request.setAttribute("availableItems", availcollection2);
+		//转发
+		//request.getRequestDispatcher("expert.jsp").forward(request, response);
+		//重定向
+		//response.sendRedirect("expert.jsp");
+	}
+	
+	//提交数据
+	@RequestMapping(value="/sureexpert")
+	public void sureExpert(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String user = request.getParameter("user");
+		String[] experttype = request.getParameterValues("search");
+	      String expertinfo = "";
+	      ArrayList<String> expertList = new ArrayList<String>();
+	      if(experttype!=null)
+	      {
+	    	 for(int i=0; i<experttype.length; i++)
+	    	 {
+	    		 expertList.add(experttype[i]);
+	    	   if(i==0)	 
+	    		   expertinfo = experttype[i] + ";";
+	    	   else
+	    		   expertinfo = expertinfo + experttype[i] + ";";  
+	    	 }
+	      }
+	      //存储专家
+	}
 	/**
 	 * 测试
 	*/

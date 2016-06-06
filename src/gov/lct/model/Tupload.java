@@ -67,6 +67,9 @@ public class Tupload {
 	
 	@Column(name="expert")
 	private String expert;
+	
+	@Column(name="number")
+	private String number;
 
 	public String getExpert() {
 		return expert;
@@ -219,4 +222,14 @@ public class Tupload {
 	public void setSuggestion(String suggestion) {
 		this.suggestion = suggestion;
 	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	
+	
 }

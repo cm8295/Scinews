@@ -20,8 +20,8 @@ public class Ttimeset {
 	@Column(name="endtime")
 	private String endtime;
 	
-	@Column(name="item")
-	private String item;
+	@Column(name="number")
+	private String number;
 
 	public Integer getId() {
 		return id;
@@ -48,11 +48,11 @@ public class Ttimeset {
 	}
 
 	public String getItem() {
-		return item;
+		return number;
 	}
 
-	public void setItem(String item) {
-		this.item = item;
+	public void setItem(String number) {
+		this.number = number;
 	}
 	
 	
