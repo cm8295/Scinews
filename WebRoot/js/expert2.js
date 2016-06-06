@@ -60,7 +60,8 @@ $(function(){
                 + '<input type="button" id="btbj" onclick="edit(this)" value="编辑">'
                 //+ '<input type="button" id="bt' + i + '" onclick="select(this)" value="修改"></input>'
     			+ '<input type="button" id="btxz" onclick="down(this)" value="下载">'
-    			+ '<input type="button" id="bt1' + i + '" onclick="submitData(this)" value="提交"></input>' 
+    			//+ '<input type="button" id="bt1' + i + '" onclick="submitData(this)" value="提交"></input>'
+    			+ '<button id="bt1' + i + '" onclick="submitData(this)">提交</button>'
     			+'</td>'+
     			'</tr>')
 	}

@@ -17,7 +17,7 @@ public class Titems {
 	@Column(name="items")
 	private String items;
 	
-	@Column(name="number")
+	@Column(name="number", nullable = false)
 	private String number;
 	
 	@Column(name="time")
@@ -39,7 +39,7 @@ public class Titems {
 	}
 
 	public void setItems(String items) {
-		this.items = items;
+		this.items= items;
 	}
 
 	public String getNumber() {
@@ -65,7 +65,4 @@ public class Titems {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
-	
-
 }

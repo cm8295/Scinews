@@ -41,7 +41,8 @@
                 <value>gov.lct.model.Trequire</value>   
                 <value>gov.lct.model.Tupload</value>   
                 <value>gov.lct.model.Ttimeset</value>
-                <value>gov.lct.model.Tevaluation</value>        						
+                <value>gov.lct.model.Tevaluation</value>    
+                <value>gov.lct.model.Titems</value>    						
 			</list>
 		</property>
 		<property name="hibernateProperties">

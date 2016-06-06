@@ -399,11 +399,11 @@ public class ManageController {
 			//System.out.println(realname);
 			System.out.println(loginname);
 			if (loginname.equals(null)) {
-				return "/error";
+				return "unauth/error";
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-			return "/error";
+			return "unauth/error";
 		}
 		//设置时间
         request.setAttribute("endtime", "2015-05-05 21:12:12");
@@ -488,16 +488,31 @@ public class ManageController {
 			//System.out.println(realname);
 			System.out.println(loginname);
 			if (loginname.equals(null)) {
-				return "/error";
+				return "unauth/error";
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-			return "/error";
+			return "unauth/error";
 		}
 		//设置时间
         request.setAttribute("endtime", "2015-05-05 21:12:12");
-        //
+        Collection times = null;
+        times = ttimesetservice.findAll(Ttimeset.class);
+      //获取项目
+        Collection items = null;
+        items = (Collection)titemsService.findAll(Titems.class);
+        /*ArrayList<String> fieldnameList=new ArrayList<String>();
+  		ArrayList<String> valueList=new ArrayList<String>();
+  		ArrayList<String> conditionList=new ArrayList<String>();
+  		fieldnameList.add("id");
+  		valueList.add("1");
+  		conditionList.add("=");
+  		Collection availableItems1 = null;
+		availableItems1 = titemsService.queryItems(Titems.class, fieldnameList, valueList, conditionList);*/
+        request.setAttribute("items", items);
         
+
+        //
         Collection availableItems = null;
 		availableItems = tuploadService.queryItems(Tupload.class, "loginname", loginname, "=", "id", 50, 0);
 		Iterator patents = null;
@@ -558,11 +573,11 @@ public class ManageController {
 			//System.out.println(realname);
 			System.out.println(loginname);
 			if (loginname.equals(null)) {
-				return "/error";
+				return "unauth/error";
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-			return "/error";
+			return "unauth/error";
 		}
 		
 		//保存所有文件名
@@ -1265,12 +1280,16 @@ public class ManageController {
 	 * author：chenming
 	 * */
 	@RequestMapping(value="/choiceexpert")
-	public void choiceExpert(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+	public String choiceExpert(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+		//被评审人姓名
+		request.setAttribute("user", request.getParameter("user"));
+		
 		//用户提交材料的类别
 		String dataType = request.getParameter("dataType");
+		request.setAttribute("number", dataType);
 		//获取类别的专家角色代码
 		if (dataType.equals(null)) {
-			return;
+			return "";
 		}
 		ArrayList<String> fieldnameList1=new ArrayList<String>();
 		ArrayList<String> valueList1=new ArrayList<String>();
@@ -1285,7 +1304,7 @@ public class ManageController {
 		Titems titems = (Titems)iterator1.next();
 		String role = titems.getRole();
 		if (role.equals(null)) {
-			return ;
+			return "";
 		}
 		//获取该类别的所有专家
 		ArrayList<String> fieldnameList2=new ArrayList<String>();
@@ -1298,15 +1317,17 @@ public class ManageController {
 		availcollection2 = (Collection)tuserservice.queryItems(Tuser.class, fieldnameList2, valueList2, conditionList2);
 		request.setAttribute("availableItems", availcollection2);
 		//转发
-		//request.getRequestDispatcher("expert.jsp").forward(request, response);
+		//request.getRequestDispatcher("setExpert").forward(request, response);
 		//重定向
 		//response.sendRedirect("expert.jsp");
+		return "unauth/manage/setExpert";
 	}
 	
 	//提交数据
 	@RequestMapping(value="/sureexpert")
 	public void sureExpert(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		String user = request.getParameter("user");
+		String number = request.getParameter("number");
 		String[] experttype = request.getParameterValues("search");
 	      String expertinfo = "";
 	      ArrayList<String> expertList = new ArrayList<String>();
@@ -1322,6 +1343,53 @@ public class ManageController {
 	    	 }
 	      }
 	      //存储专家
+	      //1插入评审
+	      for(int i = 0; i < expertList.size(); i++){
+	    	  Tevaluation tevaluation = new Tevaluation();
+	    	  tevaluation.setUser(user);
+	    	  tevaluation.setExpert(expertList.get(i));
+	    	  tevaluation.setState(0);
+	    	  tevaluation.setNumber(number);
+	    	  ArrayList<String> fieldnameList=new ArrayList<String>();
+				ArrayList<String> valueList=new ArrayList<String>();
+				ArrayList<String> conditionList=new ArrayList<String>();
+				fieldnameList.add("number");
+				fieldnameList.add("expert");
+				fieldnameList.add("user");
+				valueList.add(number);
+				valueList.add(expertList.get(i));
+				valueList.add(user);
+				conditionList.add("=");
+				conditionList.add("=");
+				conditionList.add("=");
+	    	  int num = tevaluationService.getRows(Tevaluation.class, fieldnameList, valueList, conditionList);
+	    	  if (num > 0) {
+				tevaluationService.update(tevaluation);
+			}else{
+				tevaluationService.save(tevaluation);
+			}
+	      }
+	      //2插入文件表
+	      ArrayList<String> fieldnameList=new ArrayList<String>();
+			ArrayList<String> valueList=new ArrayList<String>();
+			ArrayList<String> conditionList=new ArrayList<String>();
+			fieldnameList.add("number");
+			fieldnameList.add("loginname");
+			valueList.add(number);
+			valueList.add(user);
+			conditionList.add("=");
+			conditionList.add("=");
+			Collection availcollection = null;
+			availcollection = (Collection)tuploadService.queryItems(Tupload.class, fieldnameList, valueList, conditionList);
+			Tupload tupload = new Tupload();
+			tupload = (Tupload)availcollection.iterator().next();
+			tupload.setExpert(expertinfo);
+			if (availcollection != null) {
+				tuploadService.update(tupload);
+			}
+			else{
+				tuploadService.save(tupload);
+			}
 	}
 	/**
 	 * 测试

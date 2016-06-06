@@ -9,7 +9,7 @@ public interface GenericDAO<T, ID extends Serializable> {
 	public void updateEntity(T entity); // �޸ļ�¼
 	public void deleteEntity(T entity); // ɾ���¼
 
-	public void updateEntity(String entityClass,String fieldname, String value, String fieldname1, String value1);
+	//public void updateEntity(String entityClass,String fieldname, String value, String fieldname1, String value1);
 	//������еļ�¼��
 	public List<T> findAllEntity(Class<T> entityClass);  // ��ñ���������Ϣ��¼
 	public List<T> findAllEntity(Class<T> entityClass, int pageSize,int startRow);  // ���ָ����ʼλ�õ�һ�μ�¼

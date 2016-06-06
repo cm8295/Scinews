@@ -16,6 +16,7 @@ $(function(){
         			'<td bgcolor="#96E0E2">' + '电话' + '</td>' +
         			'<td bgcolor="#96E0E2">'+'评审专家'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'已提交资料'+'</td>'+
+        			'<td bgcolor="#96E0E2">' + '评审类型' + '</td>' +
         			'<td bgcolor="#96E0E2">'+'时间'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'意见'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'操作'+'</td>'+
@@ -30,11 +31,13 @@ $(function(){
             			'<td>'+ /*dataObj.rows[i - 1].mobile*/'18595647894' +'</td>'+
             			'<td>'+dataObj.rows[i - 1].expert+'</td>'+
             			'<td>'+dataObj.rows[i - 1].file1+'</td>'+
+            			'<td>' + dataObj.rows[i - 1].number + '</td>'+
             			'<td>'+dataObj.rows[i - 1].uploadtime+'</td>'+
             			'<td>'+dataObj.rows[i - 1].suggestion+'</td>'+
-            			'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改意见</button>'
+            			'<td>'
+            			+ '<button id="bt' + i + '" onclick="select(this)">修改意见</button>'
+            			+ '<button id="btzj" onclick="change(this)">设置专家</button>'
             			+ '<input type="button" id="btxz1" onclick="down(this)" value="下载"/>'
-            			+ '<input type="button" id="btzj" onclick="change(this)" value="设置专家"/>'
             			+ '</td>'
             			+ '</tr>'
         				)
@@ -115,5 +118,14 @@ function subSetting() {
 }
 
 function change(elementId) {
+	
 	var username = elementId.parentNode.parentNode.children[1].innerHTML;
+	//alert(username);
+	window.showModalDialog("/Scinews/manage/choiceexpert?user=" + username + "&dataType=" + elementId.parentNode.parentNode.children[7].innerHTML);
 }
+
+
+
+
+
+

@@ -16,11 +16,11 @@ public class TitemsServiceImpl extends GenericServiceImpl<Titems, String> implem
 	@Autowired
 	private TitemsDao titemsDao;
 
-	public TitemsDao getTevaluationDao() {
+	public TitemsDao getTitemsDao() {
 		return titemsDao;
 	}
 
-	public void setTevaluationDao(TitemsDao titemsDao) {
+	public void setTitemsDao(TitemsDao titemsDao) {
 		this.titemsDao = titemsDao;
 		super.setGenericDao(titemsDao);
 	}
