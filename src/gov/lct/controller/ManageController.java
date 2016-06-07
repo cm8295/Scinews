@@ -1114,6 +1114,21 @@ public class ManageController {
 		JSONObject jb = JSONObject.fromObject(jsonT);
 	    JSONArray ja = jb.getJSONArray("rows");
 	    Tevaluation tevaluation = new Tevaluation();
+	    ArrayList<String> fieldnameList=new ArrayList<String>();
+		ArrayList<String> valueList=new ArrayList<String>();
+		ArrayList<String> conditionList=new ArrayList<String>();
+		fieldnameList.add("expert");
+		fieldnameList.add("user");
+		fieldnameList.add("no");
+		valueList.add(loginname);
+		valueList.add(ja.getJSONObject(0).getString("user"));
+		valueList.add(ja.getJSONObject(0).getString("no"));
+		conditionList.add("=");
+		conditionList.add("=");
+		conditionList.add("=");
+		Collection list = null;
+		list = tevaluationService.queryItems(Tevaluation.class, fieldnameList, valueList, conditionList);
+	    tevaluation = (Tevaluation)list.iterator().next();
 	    //System.out.println(Integer.valueOf(ja.getJSONObject(0).size()));
 	    tevaluation.setUser(ja.getJSONObject(0).getString("user"));
 	    //System.out.println(ja.getJSONObject(0).getString("item1"));
@@ -1187,10 +1202,13 @@ public class ManageController {
 		if (!"".equals(ja.getJSONObject(0).getString("item22"))) {
 			tevaluation.setItem22(ja.getJSONObject(0).getInt("item22"));
 		}
+		if (!"".equals(ja.getJSONObject(0).getString("item23"))) {
+			tevaluation.setItem22(ja.getJSONObject(0).getInt("item23"));
+		}
 	    tevaluation.setSuggestion(ja.getJSONObject(0).getString("suggestion"));
 	    tevaluation.setTime(dateFormat.format(now));
 	    tevaluation.setState(1);
-	    tevaluation.setId(Integer.valueOf(no).intValue());
+	    tevaluation.setNo(Integer.valueOf(no).intValue());
 	    tevaluation.setExpert(loginname);
 	    tevaluationService.update(tevaluation);
 	    System.out.println(ja.getJSONObject(0).getString("user"));

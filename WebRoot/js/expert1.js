@@ -13,6 +13,7 @@ $(function(){
         			'<td bgcolor="#96E0E2">'+'创造性'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'先进性'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'技术难度和复杂度'+'</td>'+
+        			'<td bgcolor="#96E0E2">'+'研发程度'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'重现度和成熟度'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'完备程度'+'</td>'+
         			'<td bgcolor="#96E0E2">'+'成果来源'+'</td>'+
@@ -62,6 +63,7 @@ $(function(){
             			'<td>'+dataObj.rows[i - 1].item20+'</td>'+
             			'<td>'+dataObj.rows[i - 1].item21+'</td>'+
             			'<td>'+dataObj.rows[i - 1].item22+'</td>'+
+            			'<td>'+dataObj.rows[i - 1].item23+'</td>'+
             			'<td>'+dataObj.rows[i - 1].suggestion+'</td>'+
             			//'<td>'+ '<button id="bt' + i + '" onclick="select(this)">修改</button>'
             			//+ '<button>下载</button>' +'</td>'+

@@ -198,7 +198,7 @@ function chk_userreg(){
         	<table width="80%"  border="1" cellspacing="0" cellpadding="0">
         	  <tr>
         	    <td width="30%" height="50" align="center" valign="middle" class="bigblue">登录名 </td>
-        	    <td width="70%" height="50" align="left" valign="middle"><input type="text" id="loginname" name="loginname" size="40" maxlength="100" height="40" value=<%=user %>></input></td>
+        	    <td width="70%" height="50" align="left" valign="middle"><input type="text" id="loginname" name="loginname" size="40" readonly="readonly" maxlength="100" height="40" value=<%=user %>></input></td>
         	  </tr>  
         	  <!-- <tr>
         	    <td width="30%" height="50" align="center" valign="middle" class="bigblue">密码 </td>
@@ -226,6 +226,9 @@ function chk_userreg(){
                        while(evalu.hasNext())
                        {
                     	 Tevaluation roleinfo = (Tevaluation)evalu.next();  
+                    	 if(roleinfo.getSuggestion() == null){
+                    		 continue;
+                    	 }
                   %>
                  
                          <option value=<%=roleinfo.getSuggestion()%>><%=roleinfo.getSuggestion()%></option>

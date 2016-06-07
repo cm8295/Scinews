@@ -86,6 +86,9 @@ public class Tevaluation {
 	@Column(name="item22")
 	private Integer item22;
 	
+	@Column(name="item23")
+	private Integer item23;
+	
 	@Column(name="time")
 	private String time;
 	
@@ -299,6 +302,15 @@ public class Tevaluation {
 
 	public void setItem22(Integer item22) {
 		this.item22 = item22;
+	}
+	
+
+	public Integer getItem23() {
+		return item23;
+	}
+
+	public void setItem23(Integer item23) {
+		this.item23 = item23;
 	}
 
 	public String getTime() {

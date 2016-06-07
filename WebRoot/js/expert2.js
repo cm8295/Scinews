@@ -8,6 +8,7 @@ $(function(){
 			'<td bgcolor="#96E0E2">'+'创造性'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'先进性'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'技术难度和复杂度'+'</td>'+
+			'<td bgcolor="#96E0E2">'+'研发程度'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'重现度和成熟度'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'完备程度'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'成果来源'+'</td>'+
@@ -17,6 +18,7 @@ $(function(){
 			'<td bgcolor="#96E0E2">'+'他人评价'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'市场适用性'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'技术辐射能力'+'</td>'+
+			'<td bgcolor="#96E0E2">'+'市场迫切度'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'知识产权保护情况'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'经济效益'+'</td>'+
 			'<td bgcolor="#96E0E2">'+'潜在效益'+'</td>'+
@@ -55,13 +57,15 @@ $(function(){
                 '<td id="tt1">'+dataObj.rows[i - 1].item19+'</td>'+
                 '<td id="tt1">'+dataObj.rows[i - 1].item20+'</td>'+
                 '<td id="tt1">'+dataObj.rows[i - 1].item21+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item22+'</td>'+
+                '<td id="tt1">'+dataObj.rows[i - 1].item23+'</td>'+
                 '<td id="tt1">'+dataObj.rows[i - 1].suggestion+'</td>'+
     			'<td>'
                 + '<input type="button" id="btbj" onclick="edit(this)" value="编辑">'
                 //+ '<input type="button" id="bt' + i + '" onclick="select(this)" value="修改"></input>'
     			+ '<input type="button" id="btxz" onclick="down(this)" value="下载">'
-    			//+ '<input type="button" id="bt1' + i + '" onclick="submitData(this)" value="提交"></input>'
-    			+ '<button id="bt1' + i + '" onclick="submitData(this)">提交</button>'
+    			+ '<input type="button" id="bt1' + i + '" onclick="submitData(this)" value="提交"></input>'
+    			/*+ '<button id="bt1' + i + '" onclick="submitData(this)">提交</button>'*/
     			+'</td>'+
     			'</tr>')
 	}
@@ -146,7 +150,8 @@ function submitData(elementId){
 		+ "\"item20\":\"" + elementId.parentNode.parentNode.children[21].innerHTML + "\","
 		+ "\"item21\":\"" + elementId.parentNode.parentNode.children[22].innerHTML + "\","
 		+ "\"item22\":\"" + elementId.parentNode.parentNode.children[23].innerHTML + "\","
-		+ "\"suggestion\":\"" + elementId.parentNode.parentNode.children[23].innerHTML + "\"";
+		+ "\"item23\":\"" + elementId.parentNode.parentNode.children[24].innerHTML + "\","
+		+ "\"suggestion\":\"" + elementId.parentNode.parentNode.children[25].innerHTML + "\"";
 	//}
 	jsonT += "}]}";
 	console.log(jsonT);
