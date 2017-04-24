@@ -17,7 +17,7 @@ public class test {
 	
 	@RequestMapping("/test11")
 	public String test11(){
-		System.err.println("nihao");
+		System.err.println("nihaoÖĞ¹ú");
 		return "/index";
 	}
 
