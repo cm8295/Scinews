@@ -11,7 +11,7 @@ public class test {
 	
 	@RequestMapping("/test1")
 	public String test1(HttpServletRequest request) throws Exception {
-		System.err.println("nihao");
+		System.err.println("nihao--testing-branch");
 		return "/index";
 	}
 	
